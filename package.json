@@ -1,0 +1,6 @@
+{
+  "name": "grunt-ft",
+  "description": "Shared grunt configuration for FT.com projects",
+  "repository": "https://github.com/commuterjoy/grunt-ft.git",
+  "version": "0.1.0"
+}
