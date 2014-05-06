@@ -50,7 +50,7 @@ module.exports = {
     preprocessors: preprocessors,
     reporters: ['progress', 'dots'],
     browserify: {
-      transform: ['brfs', 'debowerify'],
+      transform: ['textrequireify', 'debowerify'],
       debug: false
     },
     singleRun: true,
@@ -62,7 +62,7 @@ module.exports = {
   browser: {
      options: {
       browserify: {
-        transform: ['brfs', 'debowerify'],
+        transform: ['textrequireify', 'debowerify'],
         debug: true
       },
       singleRun: false,

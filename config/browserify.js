@@ -4,7 +4,7 @@ module.exports = {
             '<%= path.target %><%= static_assets_path.js %>main.js': ['<%=path.js_src %>/main.js'],
         },
         options: {
-            transform: ['debowerify', 'textrequireify', 'brfs', ['uglifyify', {global: true}]],
+            transform: ['debowerify', 'textrequireify', ['uglifyify', {global: true}]],
             bundleOptions: {
                 debug: false
             }
@@ -15,7 +15,7 @@ module.exports = {
             '<%= path.target %><%= static_assets_path.js %>head.js': ['<%=path.js_src %>/head/tracking.js'],
         },
         options: {
-            transform: ['debowerify', 'textrequireify', 'brfs'],
+            transform: ['debowerify', 'textrequireify'],
             bundleOptions: {
                 debug: false
             }
@@ -26,7 +26,7 @@ module.exports = {
             '<%= path.target %><%= static_assets_path.js %>main.js': ['<%=path.js_src %>/main.js'],
         },
         options: {
-            transform: ['debowerify', 'textrequireify', 'brfs'],
+            transform: ['debowerify', 'textrequireify'],
             bundleOptions: {
                 debug: true
             }
