@@ -30,7 +30,7 @@ module.exports = {
             {
                 expand: true,
                 cwd: '<%=path.bower %>/',
-                src: ['es5-shim/es5-shim.min.js', 'event-listener/eventListener.polyfill.min.js', 'classlist/classList.min.js'],
+                src: ['es5-shim/es5-shim.min.js', 'event-listener/eventListener.polyfill.min.js', 'classlist/classList.min.js', 'custom-event/custom-event-polyfill.js'],
                 rename: function (dest, file) {
                     file = file.split('/');
                     return dest + file[0] + '.js';
