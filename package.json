@@ -2,7 +2,7 @@
   "name": "responsive-ft-grunt",
   "description": "Shared grunt configuration for responsive FT.com projects",
   "repository": "http://git.svc.ft.com:8080/scm/fwp/responsive-ft-grunt.git",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "peerDependencies": {
     "grunt": "0.4.3"
   },
@@ -33,6 +33,7 @@
     "grunt-browserify": "2.0.5",
     "uglifyify": "2.1.1",
     "textrequireify": "https://github.com/ftlabs/textrequireify/archive/master.tar.gz",
-    "hogan.js": "~2.0.0"
+    "hogan.js": "~2.0.0",
+    "grunt-csso": "~0.6.1"
   }
 }
