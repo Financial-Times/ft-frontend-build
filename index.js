@@ -7,10 +7,12 @@ module.exports = function(grunt) {
     // moves all responsive-ft-grunt's dependencies up the tree so they're available from within the app
     fs.readdirSync(path.join(process.cwd(), 'node_modules/responsive-ft-grunt/node_modules')).forEach(function (module) {
         if (module.indexOf('.') !== 0) {
-            fs.renameSync(
-                path.join(process.cwd(), 'node_modules/responsive-ft-grunt/node_modules/' + module),
-                path.join(process.cwd(), 'node_modules/' + module)
-            );
+            try {
+                fs.renameSync(
+                    path.join(process.cwd(), 'node_modules/responsive-ft-grunt/node_modules/' + module),
+                    path.join(process.cwd(), 'node_modules/' + module)
+                );
+            } catche (e) {}
         }
     });
 
