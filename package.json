@@ -1,9 +1,38 @@
 {
-  "name": "grunt-ft",
-  "description": "Shared grunt configuration for FT.com projects",
-  "repository": "https://github.com/commuterjoy/grunt-ft.git",
-  "version": "0.3.1",
-  "devDependencies": {
+  "name": "responsive-ft-grunt",
+  "description": "Shared grunt configuration for responsive FT.com projects",
+  "repository": "http://git.svc.ft.com:8080/scm/fwp/responsive-ft-grunt.git",
+  "version": "0.4.0",
+  "peerDependencies": {
     "grunt": "0.4.3"
+  },
+  "dependencies": {
+    "grunt-ft": "git+http://git.svc.ft.com:8080/scm/fwp/responsive-ft-grunt.git",
+    "grunt-contrib-concat": "0.3.0",
+    "grunt-contrib-uglify": "0.2.7",
+    "grunt-contrib-copy": "0.4.1",
+    "grunt-contrib-watch": "0.4.4",
+    "grunt-contrib-jshint": "0.6.5",
+    "grunt-contrib-sass": "0.5.1",
+    "grunt-modernizr": "0.5.2",
+    "grunt-parallel": "0.3.1",
+    "grunt-contrib-clean": "0.5.0",
+    "debowerify": "https://github.com/Financial-Times/debowerify/archive/shrinkwrap-fix.tar.gz",
+    "xml2js": "0.2.8",
+    "request": "2.28.0",
+    "karma-chrome-launcher": "0.1.2",
+    "karma-jasmine": "0.2.1",
+    "karma-html-reporter": "0.1.3",
+    "karma-browserify": "0.1.0",
+    "karma-phantomjs-launcher": "0.1.2",
+    "grunt-karma": "0.8.0",
+    "browserify": "3.29.1",
+    "karma": "0.12.3",
+    "grunt-istanbul": "0.2.4",
+    "karma-coverage": "0.2.1",
+    "grunt-browserify": "2.0.5",
+    "uglifyify": "2.1.1",
+    "textrequireify": "https://github.com/ftlabs/textrequireify/archive/master.tar.gz",
+    "hogan.js": "~2.0.0",
   }
 }
