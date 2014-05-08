@@ -12,7 +12,7 @@ module.exports = function(grunt) {
                     path.join(process.cwd(), 'node_modules/responsive-ft-grunt/node_modules/' + module),
                     path.join(process.cwd(), 'node_modules/' + module)
                 );
-            } catche (e) {}
+            } catch (e) {}
         }
     });
 
