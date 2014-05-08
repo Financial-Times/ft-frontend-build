@@ -1,6 +1,47 @@
 module.exports = function(grunt) {
     "use strict";
 
+    var path = require('path');
+    var fs = require('fs');
+
+    // moves all responsive-ft-grunt's dependencies up the tree so they're available from within the app
+    fs.readdirSync(path.join(process.cwd(), 'node_modules/responsive-ft-grunt/node_modules')).forEach(function (module) {
+        if (module.indexOf('.') !== 0) {
+            fs.renameSync(
+                path.join(process.cwd(), 'node_modules/responsive-ft-grunt/node_modules/' + module),
+                path.join(process.cwd(), 'node_modules/' + module)
+            );
+        }
+    });
+
+    require('load-grunt-config')(grunt, {
+        configPath: path.join(process.cwd(), 'node_modules/responsive-ft-grunt/config'),
+        loadGruntTasks: { 
+            config: require('./package.json')
+        },
+        config: {
+            pkg: require(path.join(process.cwd(),'package.json')),
+            bwr: require(path.join(process.cwd(),'bower.json')),
+            static_assets_version: grunt.option('assetVersion') || '0.0.1',
+            path: {
+                js_src: './src/main/resources/static/js',
+                js_tests: './src/test/js',
+                js_test_dest: './target/tests/js/unit',
+                bower: './src/main/resources/modules',
+                target: './target/classes',
+                static_assets_base: '/views/<%= static_assets_version %>'
+            },
+
+            static_assets_path: {
+                css: '<%= path.static_assets_base %>/css/',
+                js: '<%= path.static_assets_base %>/js/'
+            }
+        }
+    });
+
+
+    grunt.loadTasks(path.join(process.cwd(), 'node_modules/responsive-ft-grunt/tasks'));
+
     // Tasks available to run
     grunt.registerTask('test', [
         'jshint',
