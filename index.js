@@ -2,19 +2,6 @@ module.exports = function(grunt) {
     "use strict";
 
     var path = require('path');
-    var fs = require('fs');
-
-    // moves all responsive-ft-grunt's dependencies up the tree so they're available from within the app
-    fs.readdirSync(path.join(process.cwd(), 'node_modules/responsive-ft-grunt/node_modules')).forEach(function (module) {
-        if (module.indexOf('.') !== 0) {
-            try {
-                fs.renameSync(
-                    path.join(process.cwd(), 'node_modules/responsive-ft-grunt/node_modules/' + module),
-                    path.join(process.cwd(), 'node_modules/' + module)
-                );
-            } catch (e) {}
-        }
-    });
 
     require('load-grunt-config')(grunt, {
         configPath: path.join(process.cwd(), 'node_modules/responsive-ft-grunt/config'),

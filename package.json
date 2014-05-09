@@ -2,11 +2,11 @@
   "name": "responsive-ft-grunt",
   "description": "Shared grunt configuration for responsive FT.com projects",
   "repository": "http://git.svc.ft.com:8080/scm/fwp/responsive-ft-grunt.git",
-  "version": "0.4.4",
+  "version": "0.4.5",
   "peerDependencies": {
     "grunt": "0.4.3"
   },
-  "dependencies": {
+  "peerDependencies": {
     "grunt-cli": "~0.1.9",
     "grunt": "~0.4.3",
     "load-grunt-config": "0.7.1",
