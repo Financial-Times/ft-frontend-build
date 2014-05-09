@@ -34,7 +34,6 @@
     "karma-coverage": "0.2.1",
     "grunt-browserify": "2.0.5",
     "uglifyify": "2.1.1",
-    "textrequireify": "https://github.com/ftlabs/textrequireify/archive/master.tar.gz",
     "hogan.js": "~2.0.0",
     "grunt-csso": "~0.6.1"
   }
