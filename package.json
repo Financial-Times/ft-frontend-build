@@ -5,7 +5,7 @@
     "type": "git",
     "url": "http://git.svc.ft.com:8080/scm/fwp/responsive-ft-grunt.git"
   },
-  "version": "0.4.8",
+  "version": "0.5",
   "peerDependencies": {
     "grunt-cli": "~0.1.9",
     "grunt": "~0.4.3",
@@ -19,8 +19,6 @@
     "grunt-modernizr": "0.5.2",
     "grunt-parallel": "0.3.1",
     "grunt-contrib-clean": "0.5.0",
-    "xml2js": "0.2.8",
-    "request": "2.28.0",
     "karma-chrome-launcher": "0.1.2",
     "karma-jasmine": "0.2.1",
     "karma-html-reporter": "0.1.3",
