@@ -1,10 +1,13 @@
-module.exports = function (grunt) {
-    var files = {
-        '<%= ft.builtAssetsPath %>css/main.css': ['<%= ft.builtAssetsPath %>css/main.css']
-    };
+'use strict';
 
-    grunt.config.get('ft.cssModules').forEach(function (module) {
-        files['<%= ft.builtAssetsPath %>css/' + module + '.css'] = ['<%= ft.builtAssetsPath %>css/' + module + '.css'];
+module.exports = function (grunt) {
+    var files = {};
+    var ftConfig = require(require('path').join(process.cwd(), 'grunt-config.js'));
+
+    files[ftConfig.builtAssetsPath  + 'css/main.css'] = ['<%= ft.builtAssetsPath %>css/main.css'];
+
+    ftConfig.cssModules.forEach(function (module) {
+        files[ftConfig.builtAssetsPath  + 'css/' + module + '.css'] = ['<%= ft.builtAssetsPath %>css/' + module + '.css'];
     });
 
     return {

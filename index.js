@@ -1,8 +1,14 @@
-module.exports = function(grunt, config) {
+module.exports = function (grunt) {
     "use strict";
 
     var path = require('path');
     var _ = require('lodash');
+
+    var config = require(path.join(process.cwd(), 'grunt-config.js'));
+
+    // version number to build assets with
+    config.assetsVersion = grunt.option('assetVersion') || '0.0.1';
+
 
     require('load-grunt-config')(grunt, {
         configPath: path.join(process.cwd(), 'node_modules/responsive-ft-grunt/config'),
@@ -12,21 +18,7 @@ module.exports = function(grunt, config) {
         config: {
             ft: _.defaults(config, {
                 pkg: require(path.join(process.cwd(),'package.json')),
-                bwr: require(path.join(process.cwd(),'bower.json')),
-                static_assets_version: grunt.option('assetVersion') || '0.0.1',
-                path: {
-                    js_src: '<%= ft.srcPath %>static/js',
-                    js_tests: './src/test/js',
-                    js_test_dest: './target/tests/js/unit',
-                    bower: '<%= ft.bowerPath %>',
-                    target: './target/classes',
-                    static_assets_base: '/views/<%= ft.static_assets_version %>'
-                },
-
-                static_assets_path: {
-                    css: '<%= ft.path.static_assets_base %>/css/',
-                    js: '<%= ft.path.static_assets_base %>/js/'
-                }
+                bwr: require(path.join(process.cwd(),'bower.json'))
             })
         }
     });
