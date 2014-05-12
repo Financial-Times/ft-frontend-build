@@ -1,27 +1,33 @@
 'use strict';
 
 module.exports = {
-    'mustache-src-to-target': {
+    'mustache-src-to-staging': {
         expand: true,
-        cwd: './src/main/resources/',
-        src: 'views/**/*.mustache',
-        dest: './target/'
+        cwd: '<%= ft.srcPath %>',
+        src: '**/*.mustache',
+        dest: '<%= ft.stagingPath %>'
     },
-    'mustache-target-to-public': {
+    'mustache-staging-to-built': {
         expand: true,
-        cwd: './target/',
-        src: 'views/**/*.mustache',
-        dest: './target/classes/'
+        cwd: '<%= ft.stagingPath %>',
+        src: '**/*.mustache',
+        dest: '<%= ft.builtPath %>'
+    },
+    'mustache-src-to-built': {
+        expand: true,
+        cwd: '<%= ft.srcPath %>',
+        src: '**/*.mustache',
+        dest: '<%= ft.builtPath %>'
     },
     bower: {
         expand: true,
-        cwd: '<%=path.bower %>/',
+        cwd: '<%= ft.bowerPath %>',
         src: ['**/*', '!o-*/**/*.js', '!o-*/**/*.scss'],
-        dest: '<%= path.target %><%= path.static_assets_base %>'
+        dest: '<%= ft.builtAssetsPath %>'
     },
     test: {
         expand: true,
-        cwd: './src/test/js/',
+        cwd: './<%= ft.testPath %>',
         src: ['**/*'],
         dest: './src/test/_instrumented-js/'
     },
@@ -29,18 +35,18 @@ module.exports = {
         files: [
             {
                 expand: true,
-                cwd: '<%=path.bower %>/',
-                src: ['es5-shim/es5-shim.min.js', 'event-listener/eventListener.polyfill.min.js', 'classlist/classList.min.js', 'custom-event/custom-event-polyfill.js'],
+                cwd: '<%= ft.bowerPath %>',
+                src: grunt.config.get('ft.bowerPolyfills'),
                 rename: function (dest, file) {
                     file = file.split('/');
                     return dest + file[0] + '.js';
                 },
-                dest: '<%= path.target %><%= path.static_assets_base %>/js/polyfills/'
+                dest: '<%= ft.builtAssetsPath %>js/polyfills/'
             },{
                 expand: true,
-                cwd: './src/main/resources/static/js/vendor',
-                src: ['es6-promise.js'],
-                dest: '<%= path.target %><%= path.static_assets_base %>/js/polyfills/'
+                cwd: '<%= ft.srcPath %>/vendor',
+                src: grunt.config.get('ft.srcPolyfills'),
+                dest: '<%= ft.builtAssetsPath %>js/polyfills/'
             }
         ]
     }

@@ -1,14 +1,14 @@
 module.exports = {
     mustache: {
-        files: ['./src/main/resources/views/**/*'],
-        tasks: ['build:tpl']
+        files: ['<%= ft.srcPath %>**/*.mustache', '<%= ft.bowerPath %>**/*.mustache', '!<%= ft.srcPath %>**/tmp/*.mustache'],
+        tasks: ['build:tpl:dev']
     },
     sass: {
-        files: ['./src/main/resources/**/*.scss'],
+        files: ['<%= ft.srcPath %>**/*.scss', '<%= ft.bowerPath %>**/*.scss', '!<%= ft.srcPath %>**/tmp/*.scss'],
         tasks: ['build:css:dev']
     },
     js: {
-        files: ['./src/main/resources/**/*.js', '!./src/main/resources/**/tmp/*.js'],
+        files: ['<%= ft.srcPath %>**/*.js', '<%= ft.bowerPath %>**/*.js', '!<%= ft.srcPath %>**/tmp/*.js'],
         tasks: ['build:js:dev']
     }
 };

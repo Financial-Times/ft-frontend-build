@@ -1,8 +1,7 @@
 module.exports = {
-	files: ['./src/main/resources/views/*.mustache'],
-	cwd: './target',
-	pathToCompiled: '/views/origami-templates',
-	pathToBower: '<%= path.bower %>',
+	files: ['<%= ft.srcPath %>**/*.mustache'],
+	cwd: '<%= ft.stagingPath %>',
+	pathToCompiled: '/origami-templates',
 	overrides: {
 		'o-ft-header': {
             _namespace: 'header',

@@ -9,10 +9,10 @@ module.exports =  {
     ci: {
         tasks: [{
             grunt: true,
-            args: ['test', '--assetVersion=<%= static_assets_version %>']
+            args: ['test', '--assetVersion=<%= ft.assetsVersion %>']
         }, {
             grunt: true,
-            args: ['build', '--assetVersion=<%= static_assets_version %>']
+            args: ['build', '--assetVersion=<%= ft.assetsVersion %>']
         }]
     }
 };

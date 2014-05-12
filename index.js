@@ -1,7 +1,8 @@
-module.exports = function(grunt) {
+module.exports = function(grunt, config) {
     "use strict";
 
     var path = require('path');
+    var _ = require('lodash');
 
     require('load-grunt-config')(grunt, {
         configPath: path.join(process.cwd(), 'node_modules/responsive-ft-grunt/config'),
@@ -9,22 +10,24 @@ module.exports = function(grunt) {
             config: require('./package.json')
         },
         config: {
-            pkg: require(path.join(process.cwd(),'package.json')),
-            bwr: require(path.join(process.cwd(),'bower.json')),
-            static_assets_version: grunt.option('assetVersion') || '0.0.1',
-            path: {
-                js_src: './src/main/resources/static/js',
-                js_tests: './src/test/js',
-                js_test_dest: './target/tests/js/unit',
-                bower: './src/main/resources/modules',
-                target: './target/classes',
-                static_assets_base: '/views/<%= static_assets_version %>'
-            },
+            ft: _.defaults(config, {
+                pkg: require(path.join(process.cwd(),'package.json')),
+                bwr: require(path.join(process.cwd(),'bower.json')),
+                static_assets_version: grunt.option('assetVersion') || '0.0.1',
+                path: {
+                    js_src: '<%= ft.srcPath %>static/js',
+                    js_tests: './src/test/js',
+                    js_test_dest: './target/tests/js/unit',
+                    bower: '<%= ft.bowerPath %>',
+                    target: './target/classes',
+                    static_assets_base: '/views/<%= ft.static_assets_version %>'
+                },
 
-            static_assets_path: {
-                css: '<%= path.static_assets_base %>/css/',
-                js: '<%= path.static_assets_base %>/js/'
-            }
+                static_assets_path: {
+                    css: '<%= ft.path.static_assets_base %>/css/',
+                    js: '<%= ft.path.static_assets_base %>/js/'
+                }
+            })
         }
     });
 
@@ -55,7 +58,7 @@ module.exports = function(grunt) {
                 // constructs origami templates
                 'copy:mustache-src-to-target',
                 'build-templates',
-                'remove-whitespace',
+                'minify-inline-head-script',
                 'hogan-compile',
                 'copy:mustache-target-to-public'
             ]);
@@ -102,7 +105,7 @@ module.exports = function(grunt) {
 
         if (!mode || mode === 'js') {
             if (env === 'dev') {
-                grunt.file.copy('./src/main/resources/static/js/vendor/modernizr-dev.js', './src/main/resources/tmp/modernizr-custom.js');
+                grunt.file.copy('<%= ft.srcPath %>static/js/vendor/modernizr-dev.js', '<%= ft.srcPath %>tmp/modernizr-custom.js');
             } else {
                 grunt.task.run([
                     // analyze styles and scripts to generate custom modernizr build

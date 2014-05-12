@@ -1,4 +1,4 @@
 module.exports = {
-    js: ['./src/main/resources/tmp'],
-    coverage: ['./_instrumented-js', './src/test/_instrumented-js', './src/main/resources/static/_instrumented-js']
+    js: ['<%= ft.srcPath %>tmp'],
+    coverage: ['./_instrumented-js', './src/test/_instrumented-js', '<%= ft.srcPath %>static/_instrumented-js']
 };

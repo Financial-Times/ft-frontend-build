@@ -51,11 +51,11 @@ module.exports = {
         options: jshintConfigs.node
     },
     browser: {
-        src: ['<%=path.js_src %>/**/*.js', '!<%=path.js_src %>/vendor/**/*.js', '!<%=path.js_src %>/views/**/*.js'],
+        src: ['<%= ft.srcPath %>**/*.js', '!<%= ft.srcPath %>/vendor/**/*.js', '!<%= ft.srcPath %>**/*.hogan.js'],
         options: jshintConfigs.browser
     },
     test: {
-        src: ['<%=path.js_tests %>/**/*.js'],
+        src: ['<%= ft.testPath %>**/*.js'],
         options: jshintConfigs.test
     }
 };

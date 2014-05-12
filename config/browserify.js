@@ -1,7 +1,7 @@
 module.exports = {
     main: {
         files: {
-            '<%= path.target %><%= static_assets_path.js %>main.js': ['<%=path.js_src %>/main.js'],
+            '<%= ft.builtAssetsPath %>js/main.js': ['<%= ft.srcPath %>app/js/main.js'],
         },
         options: {
             transform: ['debowerify', 'textrequireify', ['uglifyify', {global: true}]],
@@ -12,7 +12,7 @@ module.exports = {
     },
     head: {
         files: {
-            '<%= path.target %><%= static_assets_path.js %>head.js': ['<%=path.js_src %>/head/tracking.js'],
+            '<%= ft.builtAssetsPath %>js/head.js': ['<%=path.js_src %>app/js/head/main.js'],
         },
         options: {
             transform: ['debowerify', 'textrequireify'],
@@ -21,9 +21,20 @@ module.exports = {
             }
         }
     },
+    headDev: {
+        files: {
+            '<%= ft.builtAssetsPath %>js/head.js': ['<%=path.js_src %>app/js/head/main.js'],
+        },
+        options: {
+            transform: ['debowerify', 'textrequireify', ['uglifyify', {global: true}]],
+            bundleOptions: {
+                debug: true
+            }
+        }
+    },
     dev: {
         files: {
-            '<%= path.target %><%= static_assets_path.js %>main.js': ['<%=path.js_src %>/main.js'],
+            '<%= ft.builtAssetsPath %>js/main.js': ['<%= ft.srcPath %>app/js/main.js'],
         },
         options: {
             transform: ['debowerify', 'textrequireify'],

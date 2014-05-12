@@ -5,7 +5,7 @@ module.exports = function(grunt) {
     var fs = require('fs');
 
     function getBowerComponents() {
-        var bowerFolder = grunt.config.get('origami-modernizr.bowerPath'),
+        var bowerFolder = grunt.config.get('ft.bowerPath'),
             bowerFolderContents = fs.readdirSync(bowerFolder),
             bowerComponentFolders = [];
         bowerFolderContents.forEach(function(item){
@@ -74,7 +74,7 @@ module.exports = function(grunt) {
 
     grunt.task.registerTask("origami-modernizr", "", function() {
 
-        grunt.config.requires('origami-modernizr.bowerPath');
+        grunt.config.requires('ft.bowerPath');
         // grunt.loadTasks("./node_modules/grunt-origami-demoer/node_modules/grunt-modernizr/tasks");
 
         var browserFeatures = getOrigamiModuleFeatures();

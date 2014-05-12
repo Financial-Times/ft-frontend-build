@@ -1,5 +1,5 @@
 module.exports = {
-    files: ['./src/main/resources/static/js/**/*.js'],
+    files: ['<%= ft.srcPath %>**/*.js'],
     options: {
         lazy: false,
         basePath: '_instrumented-js/'
