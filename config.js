@@ -42,7 +42,7 @@ hogan-compile
 ASSUMPTIONS TO DOCUMENT
 
  - bower directory is outside of the src directory (not essential, but means tasks globbing by file type 
-   and will have to run over far fewer files)  // not important?
+   will have to run over far fewer files)  // not important?
  - src directory has following structure
  - all main.js files are commonjs modules requiring their parts using require()
 
