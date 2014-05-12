@@ -26,7 +26,7 @@ module.exports = {
             src: [
                 '<%= builtAssetsPath %>js/**/*',
                 '<%= builtAssetsPath %>css/**/*',
-                '<%= builtPath %>app/tpl/inlineHeadScript.mustache'
+                '<%= builtPath %><%= ft.defaultModule %>tpl/inlineHeadScript.mustache'
             ]
         },
         'matchCommunityTests': false, // When parseFiles = true, matchCommunityTests = true will attempt to match user-contributed tests.

@@ -1,8 +1,13 @@
+var ftConfig = require(require('path').join(process.cwd(), 'grunt-config.js'));
+var mainFiles = {};
+mainFiles[ftConfig.builtAssetsPath + 'js/main.js'] = '<%= ft.srcPath %><%= ft.defaultModule %>js/main.js';
+
+var headFiles = {};
+headFiles[ftConfig.builtAssetsPath + 'js/head.js'] = '<%= ft.srcPath %>head/js/main.js';
+
 module.exports = {
     main: {
-        files: {
-            '<%= ft.builtAssetsPath %>js/main.js': ['<%= ft.srcPath %>app/js/main.js'],
-        },
+        files: mainFiles,
         options: {
             transform: ['debowerify', 'textrequireify', ['uglifyify', {global: true}]],
             bundleOptions: {
@@ -10,10 +15,17 @@ module.exports = {
             }
         }
     },
+    dev: {
+        files: mainFiles,
+        options: {
+            transform: ['debowerify', 'textrequireify'],
+            bundleOptions: {
+                debug: true
+            }
+        }
+    },
     head: {
-        files: {
-            '<%= ft.builtAssetsPath %>js/head.js': ['<%=path.js_src %>app/js/head/main.js'],
-        },
+        files: headFiles,
         options: {
             transform: ['debowerify', 'textrequireify'],
             bundleOptions: {
@@ -22,22 +34,9 @@ module.exports = {
         }
     },
     headDev: {
-        files: {
-            '<%= ft.builtAssetsPath %>js/head.js': ['<%=path.js_src %>app/js/head/main.js'],
-        },
+        files: headFiles,
         options: {
             transform: ['debowerify', 'textrequireify', ['uglifyify', {global: true}]],
-            bundleOptions: {
-                debug: true
-            }
-        }
-    },
-    dev: {
-        files: {
-            '<%= ft.builtAssetsPath %>js/main.js': ['<%= ft.srcPath %>app/js/main.js'],
-        },
-        options: {
-            transform: ['debowerify', 'textrequireify'],
             bundleOptions: {
                 debug: true
             }

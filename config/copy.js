@@ -12,13 +12,13 @@ module.exports = function (grunt) {
             expand: true,
             cwd: '<%= ft.stagingPath %>',
             src: '**/*.mustache',
-            dest: '<%= ft.builtPath %>'
+            dest: '<%= ft.builtTemplatesPath %>'
         },
         'mustache-src-to-built': {
             expand: true,
             cwd: '<%= ft.srcPath %>',
             src: '**/*.mustache',
-            dest: '<%= ft.builtPath %>'
+            dest: '<%= ft.builtTemplatesPath %>'
         },
         bower: {
             expand: true,

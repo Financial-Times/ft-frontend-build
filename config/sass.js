@@ -1,21 +1,21 @@
+var ftConfig = require(require('path').join(process.cwd(), 'grunt-config.js'));
+var files = {};
+files[ftConfig.builtAssetsPath + 'css/main.css'] = '<%= ft.srcPath %><%= ft.defaultModule %>scss/main.scss';
+
 module.exports = {
     dist: {
         options: {
             loadPath: ['.', '<%= ft.bowerPath %>'],
             style: 'compressed'
         },
-        files: {
-            '<%= ft.builtAssetsPath %>css/main.css': '<%= ft.srcPath %>app/sass/main.scss'
-        }
+        files: files
     },
     dev: {
         options: {
             loadPath: ['.', '<%= ft.bowerPath %>'],
             style: 'expanded'
         },
-        files: {
-            '<%= ft.builtAssetsPath %>css/main.css': '<%= ft.srcPath %>app/sass/main.scss'
-        }
+        files: files
     }
 };
 
@@ -26,7 +26,7 @@ module.exports = {
 //             style: 'compressed'
 //         },
 //         files: {
-//             '<%= ft.builtAssetsPath %>css/core-comments.css': '<%= ft.srcPath %>static/sass/article/core-comments.scss'
+//             '<%= ft.builtAssetsPath %>css/core-comments.css': '<%= ft.srcPath %>static/scss/article/core-comments.scss'
 //         }
 //     }
 // };
