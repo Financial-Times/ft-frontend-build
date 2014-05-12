@@ -4,14 +4,15 @@ module.exports = function(grunt) {
     function getFileContents() {
         var content = [
             "// Temporary auto-generated file (see sass-env-vars.js) - do not add to Git.",
-            '$o-assets-global-path: "/views/' + grunt.config.get('static_assets_version') + '/";'
+            '$o-assets-global-path: "/views/' + grunt.config.get('ft.assetVersion') + '/";'
         ];
         return content.join('\n');
     }
 
     grunt.registerTask('sass-env-vars', 'Creates temporary file containing environment SASS variables.', function (cmd) {
-        var command = cmd || 'create',
-            path = './src/main/resources/static/sass/common/_environment.scss';
+        var command = cmd || 'create';
+        var ftConfig = require(require('path').join(process.cwd(), 'grunt-config.js'));
+        var path = ftConfig.srcPath + 'tmp/_environment.scss';
 
         if (command === 'create') {
             grunt.file.write(path, getFileContents(), { encoding: 'utf8' });

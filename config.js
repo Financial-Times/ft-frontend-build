@@ -7,9 +7,9 @@ module.exports = {
     // path to the directory where assets are loaded from in the built project
     builtPath: './target/classes/',
     // path to the directory where assets are loaded from in the built project
-    builtAssetsPath: '<%= ft.builtPath %>views/<%= ft.assetsVersion %>/',
+    builtAssetsPath: '<%= ft.builtPath %>views/<%= ft.assetVersion %>/',
     // version number to build assets with
-    assetsVersion: grunt.option('assetVersion') || '0.0.1',
+    assetVersion: grunt.option('assetVersion') || '0.0.1',
     // path where some assets may need temporarily moving to during build (e.g. templates in dropwizard)
     stagingPath: './target/',
     stageAssets: ['tpl'],

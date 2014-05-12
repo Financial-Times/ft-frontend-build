@@ -9,8 +9,7 @@ module.exports = function (grunt) {
     function queueTasks(queue, tasks, name) {
 
         // allows product dev to override blocks of the build
-        tasks = config[name] !== undefined ? config[name] : tasks;
-
+        tasks = config.blocks[name] !== undefined ? config[name] : tasks;
         // allows product dev to disable a block of tasks
         if (!tasks) {
             return;
@@ -18,7 +17,8 @@ module.exports = function (grunt) {
 
         // allows product devs to skip individual steps of the build
         tasks.forEach(function (task) {
-            if (!config.skip.indexOf(task) && !config.skip.indexOf(task.split(':')[0])) {
+            // console.log(task.split(':')[0]);
+            if (!(config.skip.indexOf(task) > -1 || config.skip.indexOf(task.split(':')[0]) > -1)) {
                 queue.push(task);
             }
         });
@@ -35,7 +35,7 @@ module.exports = function (grunt) {
             ft: _.defaults(config, {
                 pkg: require(path.join(process.cwd(),'package.json')),
                 bwr: require(path.join(process.cwd(),'bower.json')),
-                assetsVersion: grunt.option('assetVersion') || '0.0.1',
+                assetVersion: grunt.option('assetVersion') || '0.0.1',
                 bowerPath: './bower_components/',
                 stageAssets: [],
                 stagingPath: './tmp/',
@@ -44,6 +44,8 @@ module.exports = function (grunt) {
                 cssModules: [],
                 jsModules: [],
                 skip: [],
+                copyExcludeList: [],
+                blocks: {},
                 parallelTestAndBuild: false,
                 defaultModule: config.isModular ? 'app/' : ''
             })
@@ -65,7 +67,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask('build', 'Building the front end', function (mode, env) {
 
-        console.log("Building front-end with version number " + grunt.config.get('static_assets_version'));
+        console.log("Building front-end with version number " + grunt.config.get('assetVersion'));
         
         var tasks = [];
 
@@ -110,13 +112,13 @@ module.exports = function (grunt) {
             if (env === 'dev') {
                 queueTasks(tasks, [
                     'sass:dev',
-                    'sass:core-comments'
+                    // 'sass:core-comments'
                     // 'sass-env-vars:clean', //removed because it makes intelli-j delete the css
                 ], 'css:dev');
             } else {
                 queueTasks(tasks, [
                     'sass:dist',
-                    'sass:core-comments',
+                    // 'sass:core-comments',
                     'csso:prod'
                     // 'sass-env-vars:clean', //removed because it makes intelli-j delete the css
                 ], 'css:prod');
@@ -130,12 +132,12 @@ module.exports = function (grunt) {
                 queueTasks(tasks, [
                     // analyze styles and scripts to generate custom modernizr build
                     'origami-modernizr'
-                ]);
+                ], 'polyfill');
             }
             queueTasks(tasks, [
                 // concatenate modernizr with the head scripts and minify
                 'concat:modernizr'
-            ]);
+            ], 'polyfill');
 
             if (env !== 'dev') {
                 queueTasks(tasks, [
@@ -143,7 +145,7 @@ module.exports = function (grunt) {
                     'copy:polyfills',
                     // discard the modernizr custom build
                     'clean:js'
-                ]);
+                ], 'polyfill');
             }
 
         }
@@ -153,6 +155,7 @@ module.exports = function (grunt) {
             queueTasks(tasks, ['copy:bower'], 'assets');
         }
 
+        console.log(tasks);
         grunt.task.run(tasks);
     });
 

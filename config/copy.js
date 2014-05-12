@@ -1,6 +1,10 @@
 'use strict';
 
 module.exports = function (grunt) {
+
+    var ftConfig = require(require('path').join(process.cwd(), 'grunt-config.js'));
+
+
     return {
         'mustache-src-to-staging': {
             expand: true,
@@ -23,7 +27,32 @@ module.exports = function (grunt) {
         bower: {
             expand: true,
             cwd: '<%= ft.bowerPath %>',
-            src: ['**/*', '!o-*/**/*.js', '!o-*/**/*.scss'],
+            src: [
+                '**/*',
+                '!*',
+                '!o-*/main.*',
+                '!o-*/**/*.js',
+                '!o-*/**/*.scss',
+                '!o-*/src',
+                '!o-*/src/**/*',
+                '!*/bower.json',
+                '!*/origami.json',
+                '!*/README.md',
+                '!*/readme.md',
+                '!*/demos',
+                '!*/demos/**/*'
+            ].concat(
+                (function () {
+                    var extras = [];
+                    return ftConfig.copyExcludeList.map(function (glob) {
+                        if (glob.charAt(glob.length - 1) === '/') {
+                            extras.push('!' + glob.slice(0, glob.length - 1));
+                            return '!' + glob + '**/*';
+                        }
+                        return '!' + glob;
+                    }).concat(extras);
+                })()
+            ),
             dest: '<%= ft.builtAssetsPath %>'
         },
         test: {
