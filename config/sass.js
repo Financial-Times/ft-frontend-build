@@ -1,4 +1,4 @@
-var ftConfig = require(require('path').join(process.cwd(), 'grunt-config.js'));
+var ftConfig = require(require('path').join(process.cwd(), 'responsive-ft-config.js'));
 var files = {};
 files[ftConfig.builtAssetsPath + 'css/main.css'] = '<%= ft.srcPath %><%= ft.defaultModule %>scss/main.scss';
 

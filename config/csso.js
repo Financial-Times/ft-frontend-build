@@ -2,7 +2,7 @@
 
 module.exports = function (grunt) {
     var files = {};
-    var ftConfig = require(require('path').join(process.cwd(), 'grunt-config.js'));
+    var ftConfig = require(require('path').join(process.cwd(), 'responsive-ft-config.js'));
 
     files[ftConfig.builtAssetsPath  + 'css/main.css'] = ['<%= ft.builtAssetsPath %>css/main.css'];
 

@@ -11,7 +11,7 @@ module.exports = function(grunt) {
 
     grunt.registerTask('sass-env-vars', 'Creates temporary file containing environment SASS variables.', function (cmd) {
         var command = cmd || 'create';
-        var ftConfig = require(require('path').join(process.cwd(), 'grunt-config.js'));
+        var ftConfig = require(require('path').join(process.cwd(), 'responsive-ft-config.js'));
         var path = ftConfig.srcPath + 'tmp/_environment.scss';
 
         if (command === 'create') {

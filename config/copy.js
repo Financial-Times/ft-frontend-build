@@ -2,7 +2,7 @@
 
 module.exports = function (grunt) {
 
-    var ftConfig = require(require('path').join(process.cwd(), 'grunt-config.js'));
+    var ftConfig = require(require('path').join(process.cwd(), 'responsive-ft-config.js'));
 
 
     return {

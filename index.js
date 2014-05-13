@@ -4,21 +4,14 @@ module.exports = function (grunt) {
     var path = require('path');
     var _ = require('lodash');
 
-    var config = require(path.join(process.cwd(), 'grunt-config.js'));
+    var config = require(path.join(process.cwd(), 'responsive-ft-config.js'));
 
-    function queueTasks(queue, tasks, name) {
-
-        // allows product dev to override blocks of the build
-        tasks = config.blocks[name] !== undefined ? config[name] : tasks;
-        // allows product dev to disable a block of tasks
-        if (!tasks) {
-            return;
-        }
+    function queueTasks(queue, tasks) {
 
         // allows product devs to skip individual steps of the build
         tasks.forEach(function (task) {
             // console.log(task.split(':')[0]);
-            if (!(config.skip.indexOf(task) > -1 || config.skip.indexOf(task.split(':')[0]) > -1)) {
+            if (!(config.skipTasks.indexOf(task) > -1 || config.skipTasks.indexOf(task.split(':')[0]) > -1)) {
                 queue.push(task);
             }
         });
@@ -43,15 +36,17 @@ module.exports = function (grunt) {
                 srcPolyfills: [],
                 cssModules: [],
                 jsModules: [],
-                skip: [],
+                skipTasks: [],
                 copyExcludeList: [],
-                blocks: {},
+                blocks: ['clean', 'tpl', 'js', 'css', 'polyfill', 'assets'],
+                skipBlocks: [],
                 parallelTestAndBuild: false,
                 defaultModule: config.isModular ? 'app/' : ''
             })
         }
     });
 
+    var tasks = [];
 
     grunt.loadTasks(path.join(process.cwd(), 'node_modules/responsive-ft-grunt/tasks'));
 
@@ -65,95 +60,128 @@ module.exports = function (grunt) {
         'karma:browser'
     ]);
 
+    var buildBlocks = {
+        clean: function (mode, env, tasks) {
+            if (!mode) {
+                queueTasks(tasks, ['clean']);
+            } else if (mode === 'tpl') {
+                queueTasks(tasks, ['clean:tpl']);
+            } else if (mode === 'js' || mode === 'polyfill') {
+                queueTasks(tasks, ['clean:js']);
+            } else if (mode === 'css') {
+                queueTasks(tasks, ['clean:css']);
+            } else if (mode === 'assets') {
+                queueTasks(tasks, ['clean:assets']);
+            }
+        },
+        tpl: function (mode, env, tasks) {
+            if (!mode || mode === 'tpl') {
+                queueTasks(tasks, [
+                    // constructs origami templates
+                    'copy:mustache-src-to-target',
+                    'build-templates',
+                    'minify-inline-head-script',
+                    'hogan-compile',
+                    'copy:mustache-target-to-public'
+                ]);
+            }
+        },
+        js: function (mode, env, tasks) {
+            if (!mode || mode === 'js') {
+                if (env === 'dev') {
+                    queueTasks(tasks, [
+                        'jshint:browser',
+                        'browserify:dev',
+                        'browserify:headDev',
+                        'concat:head'
+                    ]);
+                } else {
+                    queueTasks(tasks, [
+                        'browserify:main',
+                        'browserify:head',
+                        'concat:head'
+                    ]);
+                }
+            }
+        },
+        css: function (mode, env, tasks) {
+            if (!mode || mode === 'css') {
+                
+                queueTasks(tasks, ['sass-env-vars:create']);
+                
+                if (env === 'dev') {
+                    queueTasks(tasks, [
+                        'sass:dev',
+                        // 'sass:core-comments'
+                        // 'sass-env-vars:clean', //removed because it makes intelli-j delete the css
+                    ]);
+                } else {
+                    queueTasks(tasks, [
+                        'sass:dist',
+                        // 'sass:core-comments',
+                        'csso:prod'
+                        // 'sass-env-vars:clean', //removed because it makes intelli-j delete the css
+                    ]);
+                }
+            }
+        },
+        polyfill: function (mode, env, tasks) {
+            if (!mode || mode === 'js') {
+                if (env === 'dev') {
+                    grunt.file.copy('<%= ft.srcPath %>static/js/vendor/modernizr-dev.js', '<%= ft.srcPath %>tmp/modernizr-custom.js');
+                } else {
+                    queueTasks(tasks, [
+                        // analyze styles and scripts to generate custom modernizr build
+                        'origami-modernizr'
+                    ]);
+                }
+                queueTasks(tasks, [
+                    // concatenate modernizr with the head scripts and minify
+                    'concat:modernizr'
+                ]);
+
+                if (env !== 'dev') {
+                    queueTasks(tasks, [
+                        'uglify:head',
+                        'copy:polyfills',
+                        // discard the modernizr custom build
+                        'clean:tmp'
+                    ]);
+                }
+            }
+        },
+        assets: function (mode, env, tasks) {
+            if (!mode || mode === 'assets') {
+                // copy static assets
+                queueTasks(tasks, ['copy:bower']);
+            }
+        }
+    };
+    
+   
     grunt.registerTask('build', 'Building the front end', function (mode, env) {
 
         console.log("Building front-end with version number " + grunt.config.get('assetVersion'));
         
-        var tasks = [];
-
         if (mode === 'dev') {
             env = 'dev';
             mode = undefined;
         }
 
-        if (!mode || mode === 'tpl') {
-
-            queueTasks(tasks, [
-                // constructs origami templates
-                'copy:mustache-src-to-target',
-                'build-templates',
-                'minify-inline-head-script',
-                'hogan-compile',
-                'copy:mustache-target-to-public'
-            ], 'tpl');
-        }
-
-        if (!mode || mode === 'js') {
-            if (env === 'dev') {
-                queueTasks(tasks, [
-                    'jshint:browser',
-                    'browserify:dev',
-                    'browserify:headDev',
-                    'concat:head'
-                ], 'js:dev');
-            } else {
-                queueTasks(tasks, [
-                    'browserify:main',
-                    'browserify:head',
-                    'concat:head'
-                ], 'js:prod');
+        var blocks = [];
+        config.blocks.forEach(function (block) {
+            if (config.skipBlocks.indexOf(block)=== -1) {
+                blocks.push(block);
             }
-        }
+        });
 
-        if (!mode || mode === 'css') {
-            
-            queueTasks(tasks, ['sass-env-vars:create']);
-            
-            if (env === 'dev') {
-                queueTasks(tasks, [
-                    'sass:dev',
-                    // 'sass:core-comments'
-                    // 'sass-env-vars:clean', //removed because it makes intelli-j delete the css
-                ], 'css:dev');
-            } else {
-                queueTasks(tasks, [
-                    'sass:dist',
-                    // 'sass:core-comments',
-                    'csso:prod'
-                    // 'sass-env-vars:clean', //removed because it makes intelli-j delete the css
-                ], 'css:prod');
+        blocks.forEach(function (block) {
+            if (typeof block === 'string') {
+                buildBlocks[block](mode, env, tasks);
+            } else if (typeof block === 'function') {
+                block(mode, env, tasks);
             }
-        }
-
-        if (!mode || mode === 'js') {
-            if (env === 'dev') {
-                grunt.file.copy('<%= ft.srcPath %>static/js/vendor/modernizr-dev.js', '<%= ft.srcPath %>tmp/modernizr-custom.js');
-            } else {
-                queueTasks(tasks, [
-                    // analyze styles and scripts to generate custom modernizr build
-                    'origami-modernizr'
-                ], 'polyfill');
-            }
-            queueTasks(tasks, [
-                // concatenate modernizr with the head scripts and minify
-                'concat:modernizr'
-            ], 'polyfill');
-
-            if (env !== 'dev') {
-                queueTasks(tasks, [
-                    'uglify:head',
-                    'copy:polyfills',
-                    // discard the modernizr custom build
-                    'clean:js'
-                ], 'polyfill');
-            }
-
-        }
-
-        if (!mode || mode === 'assets') {
-            // copy static assets
-            queueTasks(tasks, ['copy:bower'], 'assets');
-        }
+        });
 
         console.log(tasks);
         grunt.task.run(tasks);
