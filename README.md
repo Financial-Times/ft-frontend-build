@@ -114,7 +114,7 @@ All the paths below should begin with `./` and end in `/`
 * `srcPath`: Location of your front-end source files
 * `stagingPath`: In certain circumstances you may need to stage some of your built source files before copying them to your public root. They will be placed in this directory
 * `builtTemplatesPath`: Directory to place your app's built templates in 
-* `builtAssetsPath`: Directory to place all your app's built static assets (including css and js) in
+* `builtAssetsPath`: Directory to place all your app's built static assets (including css and js) in. Note that eth assets version number will be appended to this path (see Running -> parameters below)
 
 ### Build steps
 
@@ -138,7 +138,7 @@ All the paths below should begin with `./` and end in `/`
 * `skipBlocks` *[]*: List of named build blocks to skip  
 * `skipTasks` *[]*: List of specific grunt-tasks to skip. e.g. `copy:tpl` will skip copying templates, whereas `copy` will skip `copy:tpl`, `copy:js` etc...
 * `parallelTestAndBuild` *false*: **Unimplemented**
-* `stageAssets` *[]*: types of assets that need to be staged rather than copied directly to the built app. The naming convention follows taht of `blocks`
+* `stageAssets` *[]*: types of assets that need to be staged rather than copied directly to the built app. The naming convention follows that of `blocks`
 
 
 ### Modules
@@ -153,16 +153,31 @@ All the paths below should begin with `./` and end in `/`
 * `srcPolyfills` *[]*: Paths to polyfills not installed via bower. Note that e.g. `src/path/vendor/es6-promises.js` will be copied to `js/polyfills/es6-promises.js` in the built app
 
 
-## Running
+## Running using the CLI
 
-asset version
-task paramas
-shell script
-build vs test
+### Tasks
+
+4 tasks are available
+
+* `default` (called using `grunt`) - runs both `test` and `build`
+* `test` (called using `grunt test`) - lints js files and runs any unit tests using karma
+* `build` (called using `grunt build`) - builds the app
+* `watch` (called using `grunt watch`) - watches for source code changes (including changes to bower modules) and runs a sub-build in dev mode 
+
+In addition `build` accepts two optional parameters, 
+
+*`subbuild`: Specifies a subsection of the build to run. The naming convention follows that of `blocks`
+*`env`: Specifies whether to carry out a production (`prod`) or dev (`dev`) build - defaults to `prod`
+
+e.g `build:js:dev`, `build:dev`, 
+
+### Parameters
+
+The asset version to build can be set using `--assetVersion=1.2.3` in the cli. This version number (and a '/') will be appended to the built app's static assets path, defaulting to 0.0.1
 
 ## Tests
 
-By default jasmine, but can be  overwritten in its entirety
+By default these shoudl be written in jasmine and will be run using karam, but can be overwritten in its entirety
 
 
 /*
@@ -176,48 +191,5 @@ ability for browserify and sass builds to be passed in names of modules
 staging templates
 modernizr + modernizrless versions of tests
 hogan-compile
-
-ASSUMPTIONS TO DOCUMENT
-
- - bower directory is outside of the src directory (not essential, but means tasks globbing by file type 
-   will have to run over far fewer files)  // not important?
- - src directory has following structure
- - all main.js files are commonjs modules requiring their parts using require()
-
-modules
- \_ js, scss and ms files
-vendor
- \_ polyfills and such like which aren't includable using debowerify, mostly js
-utils   /// no opinion on this
- \_ scss
- \_ js
-app
- \_js
-    // try and treat head as a non-special case to allow for creation of multiple bundles and lazy loading in future
-   \_ lazyloadedthing
-      main.js
-   \_ head
-      main.js
-   \_ main
-     \_ routers etc
-     \_ controllers
-    main.js
- \_sass
-    \_ lazyloadedthing
-      main.scss
-    main.scss
- \_tpl
-   \inlineHeadScript.mustache
-
-
-WHICH GETS BUILT TO
-
-
-
-
-
-
-
-
 
 */

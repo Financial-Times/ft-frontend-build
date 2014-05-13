@@ -38,11 +38,11 @@ module.exports = function (grunt, loadConfig) {
             blocks: ['clean', 'tpl', 'js', 'css', 'polyfill', 'assets'],
             skipBlocks: [],
             parallelTestAndBuild: false,
-            defaultModule: config.isModular ? 'app/' : ''
+            defaultModule: config.isModular ? 'app/main/' : ''
         })
     });
 
-    loadConfig.configPath = configPath: path.join(process.cwd(), 'node_modules/responsive-ft-grunt/config');
+    loadConfig.configPath = path.join(process.cwd(), 'node_modules/responsive-ft-grunt/config');
 
     loadConfig.loadGruntTasks = loadConfig.loadGruntTasks || {};
     loadConfig.loadGruntTasks.config = loadConfig.loadGruntTasks.config || {};
