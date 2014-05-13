@@ -3,8 +3,9 @@ module.exports = function (grunt, loadConfig) {
     loadConfig = loadConfig || {};
     var path = require('path');
     var _ = require('lodash');
-    var deepDefault = _.partialRight(_.merge, _.defaults);
-
+    var deepDefault = _.partialRight(_.merge, function deep(a, b) {
+      return _.merge(a, b, deep);
+    });
     var config = require('./grunt-config')(grunt);
 
     function queueTasks(queue, tasks) {
