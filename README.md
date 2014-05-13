@@ -118,7 +118,7 @@ All the paths below should begin with `./` and end in `/`
 * `srcPath`: Location of your front-end source files
 * `stagingPath`: In certain circumstances you may need to stage some of your built source files before copying them to your public root. They will be placed in this directory
 * `builtTemplatesPath`: Directory to place your app's built templates in 
-* `builtAssetsPath`: Directory to place all your app's built static assets (including css and js) in. Note that eth assets version number will be appended to this path (see Running -> parameters below)
+* `builtAssetsPath`: Directory to place all your app's built static assets (including css and js) in. To include an assets version in the path use `{{version}}` and this will be replaced at build time with teh asset parameter pased in (see Running -> parameters below)
 
 ### Build steps
 

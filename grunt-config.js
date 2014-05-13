@@ -6,10 +6,18 @@ var deepDefault = _.partialRight(_.merge, _.defaults);
 
 var configContents = require(path.join(process.cwd(), 'responsive-ft-config.js'));
 
-configContents.srcPath = configContents.srcPath + (configContents.isModular ? 'app/' : '');
+var completeConfig;
 
 module.exports = function (grunt) {
-    return deepDefault({ft: configContents}, {
+
+    
+    if (completeConfig) {
+        return completeConfig;
+    }
+
+    configContents.srcPath = configContents.srcPath + (configContents.isModular ? 'app/' : '');
+    configContents.builtAssetsPath = configContents.builtAssetsPath.replace('{{version}}', grunt.option('assetVersion') || '0.0.1');
+    completeConfig = deepDefault({ft: configContents}, {
         pkg: require(path.join(process.cwd(),'package.json')),
         bwr: require(path.join(process.cwd(),'bower.json')),
         ft: {
@@ -29,4 +37,6 @@ module.exports = function (grunt) {
             parallelTestAndBuild: false
         }
     });
+
+    return completeConfig;
 };
