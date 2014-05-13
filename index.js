@@ -1,54 +1,31 @@
 module.exports = function (grunt, loadConfig) {
     "use strict";
-
+    loadConfig = loadConfig || {};
     var path = require('path');
     var _ = require('lodash');
+    var deepDefault = _.partialRight(_.merge, _.defaults);
 
-    var config = require(path.join(process.cwd(), 'responsive-ft-config.js'));
+    var config = require('./grunt-config')(grunt);
 
     function queueTasks(queue, tasks) {
 
         // allows product devs to skip individual steps of the build
         tasks.forEach(function (task) {
             // console.log(task.split(':')[0]);
-            if (!(config.skipTasks.indexOf(task) > -1 || config.skipTasks.indexOf(task.split(':')[0]) > -1)) {
+            if (!(config.ft.skipTasks.indexOf(task) > -1 || config.ft.skipTasks.indexOf(task.split(':')[0]) > -1)) {
                 queue.push(task);
             }
         });
 
         return queue;
     }
-
-    loadConfig = loadConfig || {};
-    loadConfig.config = _.defaults(loadConfig.config, {
-        ft: _.defaults(config, {
-            pkg: require(path.join(process.cwd(),'package.json')),
-            bwr: require(path.join(process.cwd(),'bower.json')),
-            assetVersion: grunt.option('assetVersion') || '0.0.1',
-            bowerPath: './bower_components/',
-            stageAssets: [],
-            stagingPath: './tmp/',
-            bowerPolyfills: [],
-            srcPolyfills: [],
-            cssModules: [],
-            jsModules: [],
-            skipTasks: [],
-            copyExcludeList: [],
-            copyIncludeList: [],
-            blocks: ['clean', 'tpl', 'js', 'css', 'polyfill', 'assets'],
-            skipBlocks: [],
-            parallelTestAndBuild: false,
-            defaultModule: config.isModular ? 'app/main/' : ''
-        })
-    });
-
-    loadConfig.configPath = path.join(process.cwd(), 'node_modules/responsive-ft-grunt/config');
-
-    loadConfig.loadGruntTasks = loadConfig.loadGruntTasks || {};
-    loadConfig.loadGruntTasks.config = loadConfig.loadGruntTasks.config || {};
-    loadConfig.loadGruntTasks.config = _.defaults(loadConfig.loadGruntTasks.config, require('./package.json'));
-
-    require('load-grunt-config')(grunt, loadConfig);
+    require('load-grunt-config')(grunt, deepDefault(loadConfig, {
+        configPath: path.join(process.cwd(), 'node_modules/responsive-ft-grunt/config'),
+        loadGruntTasks: {
+            config: require('./package.json')
+        },
+        config: config
+    }));
 
     var tasks = [];
 
@@ -173,8 +150,8 @@ module.exports = function (grunt, loadConfig) {
         }
 
         var blocks = [];
-        config.blocks.forEach(function (block) {
-            if (config.skipBlocks.indexOf(block)=== -1) {
+        config.ft.blocks.forEach(function (block) {
+            if (config.ft.skipBlocks.indexOf(block)=== -1) {
                 blocks.push(block);
             }
         });
@@ -187,7 +164,6 @@ module.exports = function (grunt, loadConfig) {
             }
         });
 
-        console.log(tasks);
         grunt.task.run(tasks);
     });
 

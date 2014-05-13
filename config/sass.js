@@ -1,22 +1,25 @@
-var ftConfig = require(require('path').join(process.cwd(), 'responsive-ft-config.js'));
-var files = {};
-files[ftConfig.builtAssetsPath + 'css/main.css'] = '<%= ft.srcPath %><%= ft.defaultModule %>scss/main.scss';
+module.exports = function (grunt) {
 
-module.exports = {
-    dist: {
-        options: {
-            loadPath: ['.', '<%= ft.bowerPath %>'],
-            style: 'compressed'
+    var ftConfig = require('../grunt-config')(grunt).ft;
+    var files = {};
+    files[ftConfig.builtAssetsPath + 'css/main.css'] = '<%= ft.srcPath %><%= ft.defaultModule %>scss/main.scss';
+
+    return {
+        dist: {
+            options: {
+                loadPath: ['.', '<%= ft.bowerPath %>'],
+                style: 'compressed'
+            },
+            files: files
         },
-        files: files
-    },
-    dev: {
-        options: {
-            loadPath: ['.', '<%= ft.bowerPath %>'],
-            style: 'expanded'
-        },
-        files: files
-    }
+        dev: {
+            options: {
+                loadPath: ['.', '<%= ft.bowerPath %>'],
+                style: 'expanded'
+            },
+            files: files
+        }
+    };
 };
 
 // ,
