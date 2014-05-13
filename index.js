@@ -43,15 +43,16 @@ module.exports = function (grunt, loadConfig) {
 
     var buildBlocks = {
         clean: function (mode, env, tasks) {
-            if (!mode) {
-                queueTasks(tasks, ['clean']);
-            } else if (mode === 'tpl') {
+            if (!mode || mode === 'tpl') {
                 queueTasks(tasks, ['clean:tpl']);
-            } else if (mode === 'js' || mode === 'polyfill') {
+            } 
+            if (!mode || mode === 'js' || mode === 'polyfill') {
                 queueTasks(tasks, ['clean:js']);
-            } else if (mode === 'css') {
+            } 
+            if (!mode || mode === 'css') {
                 queueTasks(tasks, ['clean:css']);
-            } else if (mode === 'assets') {
+            } 
+            if (!mode || mode === 'assets') {
                 queueTasks(tasks, ['clean:assets']);
             }
         },
