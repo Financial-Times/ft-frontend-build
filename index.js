@@ -1,4 +1,4 @@
-module.exports = function (grunt) {
+module.exports = function (grunt, loadConfig) {
     "use strict";
 
     var path = require('path');
@@ -19,32 +19,35 @@ module.exports = function (grunt) {
         return queue;
     }
 
-    require('load-grunt-config')(grunt, {
-        configPath: path.join(process.cwd(), 'node_modules/responsive-ft-grunt/config'),
-        loadGruntTasks: {
-            config: require('./package.json')
-        },
-        config: {
-            ft: _.defaults(config, {
-                pkg: require(path.join(process.cwd(),'package.json')),
-                bwr: require(path.join(process.cwd(),'bower.json')),
-                assetVersion: grunt.option('assetVersion') || '0.0.1',
-                bowerPath: './bower_components/',
-                stageAssets: [],
-                stagingPath: './tmp/',
-                bowerPolyfills: [],
-                srcPolyfills: [],
-                cssModules: [],
-                jsModules: [],
-                skipTasks: [],
-                copyExcludeList: [],
-                blocks: ['clean', 'tpl', 'js', 'css', 'polyfill', 'assets'],
-                skipBlocks: [],
-                parallelTestAndBuild: false,
-                defaultModule: config.isModular ? 'app/' : ''
-            })
-        }
+    loadConfig = loadConfig || {};
+    loadConfig.config = _.defaults(loadConfig.config, {
+        ft: _.defaults(config, {
+            pkg: require(path.join(process.cwd(),'package.json')),
+            bwr: require(path.join(process.cwd(),'bower.json')),
+            assetVersion: grunt.option('assetVersion') || '0.0.1',
+            bowerPath: './bower_components/',
+            stageAssets: [],
+            stagingPath: './tmp/',
+            bowerPolyfills: [],
+            srcPolyfills: [],
+            cssModules: [],
+            jsModules: [],
+            skipTasks: [],
+            copyExcludeList: [],
+            blocks: ['clean', 'tpl', 'js', 'css', 'polyfill', 'assets'],
+            skipBlocks: [],
+            parallelTestAndBuild: false,
+            defaultModule: config.isModular ? 'app/' : ''
+        })
     });
+
+    loadConfig.configPath = configPath: path.join(process.cwd(), 'node_modules/responsive-ft-grunt/config');
+
+    loadConfig.loadGruntTasks = loadConfig.loadGruntTasks || {};
+    loadConfig.loadGruntTasks.config = loadConfig.loadGruntTasks.config || {};
+    loadConfig.loadGruntTasks.config = _.defaults(loadConfig.loadGruntTasks.config, require('./package.json'));
+
+    require('load-grunt-config')(grunt, loadConfig);
 
     var tasks = [];
 

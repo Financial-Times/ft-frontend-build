@@ -1,6 +1,6 @@
 # responsive-ft-grunt
 
-Configurable, (fairly) infrastructure agnostic build for a responsive front end using origami components
+Configurable and (fairly) infrastructure-agnostic build for a responsive front-end using origami components.
 
 ## Dependencies
 
@@ -15,6 +15,23 @@ The below will probably need to be run as superuser
 If your project does not already have a `package.json` run `npm init` in the project root.
 
 Then run `npm install -D responsive-ft-grunt=git+http://git.svc.ft.com/scm/fwp/responsive-ft-grunt.git`
+
+Finally your GruntFile.js should have the following content
+
+    module.exports = require('responsive-ft-grunt');
+
+... ok, so while that is fantastically minimal, it's also scarily magical, so you can take back control of your GruntFile by having
+
+    module.exports = function (grunt) {
+
+      // your stuff here ...
+
+      require('responsive-ft-grunt')(grunt, load-config);
+
+      // ... or here
+    }
+
+responsive-ft-grunt uses the excellent [load-grunt-config](https://www.npmjs.org/package/load-grunt-config) plugin which should load any npm grunt-tasks for you. `load-config` can optionally be used to pass in additional config to it.
 
 ## App structure
 
@@ -43,7 +60,7 @@ For more complex apps with multiple js and style bundles (for e.g. lazy-loaded f
 
 *Even if your app only requires a single bundle at present it's worth cosidering adopting this structure as it will mean there is zero refactoring work to do if your app increases in complexity.*
 
-Only the `app` directory and its contents is required. The remaining directories are suggestions for making your code more reusable; in particular, if you write as much of your code as possible in the `components` directory it will be relatively easy to convert into reusable origami modules in future.
+Only the `app` directory and its contents are required. The remaining directories are suggestions for making your code more reusable; in particular, if you write as much of your code as possible in the `components` directory it will be relatively easy to convert into reusable origami modules in future.
 
     root
       \_ app
