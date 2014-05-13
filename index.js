@@ -183,7 +183,7 @@ module.exports = function (grunt, loadConfig) {
             if (typeof block === 'string') {
                 buildBlocks[block](mode, env, tasks);
             } else if (typeof block === 'function') {
-                block(mode, env, tasks);
+                block(mode, env, tasks, grunt);
             }
         });
 
