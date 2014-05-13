@@ -75,14 +75,12 @@ module.exports = function (grunt, loadConfig) {
                     queueTasks(tasks, [
                         'jshint:browser',
                         'browserify:dev',
-                        'browserify:headDev',
-                        'concat:head'
+                        'browserify:headDev'
                     ]);
                 } else {
                     queueTasks(tasks, [
                         'browserify:main',
-                        'browserify:head',
-                        'concat:head'
+                        'browserify:head'
                     ]);
                 }
             }

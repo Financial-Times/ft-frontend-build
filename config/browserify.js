@@ -28,7 +28,7 @@ module.exports = function (grunt) {
         head: {
             files: headFiles,
             options: {
-                transform: ['debowerify', 'textrequireify'],
+                transform: ['debowerify', 'textrequireify', ['uglifyify', {global: true}]],
                 bundleOptions: {
                     debug: false
                 }
@@ -37,7 +37,7 @@ module.exports = function (grunt) {
         headDev: {
             files: headFiles,
             options: {
-                transform: ['debowerify', 'textrequireify', ['uglifyify', {global: true}]],
+                transform: ['debowerify', 'textrequireify'],
                 bundleOptions: {
                     debug: true
                 }
