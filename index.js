@@ -34,6 +34,7 @@ module.exports = function (grunt, loadConfig) {
             jsModules: [],
             skipTasks: [],
             copyExcludeList: [],
+            copyIncludeList: [],
             blocks: ['clean', 'tpl', 'js', 'css', 'polyfill', 'assets'],
             skipBlocks: [],
             parallelTestAndBuild: false,

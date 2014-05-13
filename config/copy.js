@@ -41,7 +41,9 @@ module.exports = function (grunt) {
                 '!*/readme.md',
                 '!*/demos',
                 '!*/demos/**/*'
-            ].concat(
+            ]
+            .concat(ftConfig.copyIncludeList)
+            .concat(
                 (function () {
                     var extras = [];
                     return ftConfig.copyExcludeList.map(function (glob) {
