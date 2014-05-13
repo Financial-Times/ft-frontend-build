@@ -1,11 +1,16 @@
 module.exports = function (grunt) {
 
     var ftConfig = require('../grunt-config')(grunt).ft;
-    var files = {};
-    files[ftConfig.builtAssetsPath + 'css/main.css'] = '<%= ft.srcPath %>scss/' + (ftConfig.isModular ? 'main/' : '')  + 'main.scss';
+    var files = {
+        '<%= ft.builtAssetsPath %>css/main.css': '<%= ft.srcPath %>scss/' + (ftConfig.isModular ? 'main/' : '')  + 'main.scss'
+    };
+
+    ftConfig.cssModules.forEach(function (module) {
+        files['<%= ft.builtAssetsPath %>css/' + module + '.css'] = ['<%= ft.srcPath %>scss/' + module + '/main.scss'];
+    });
 
     return {
-        dist: {
+        prod: {
             options: {
                 loadPath: ['.', '<%= ft.bowerPath %>'],
                 style: 'compressed'

@@ -74,13 +74,11 @@ module.exports = function (grunt, loadConfig) {
                 if (env === 'dev') {
                     queueTasks(tasks, [
                         'jshint:browser',
-                        'browserify:dev',
-                        'browserify:headDev'
+                        'browserify:dev'
                     ]);
                 } else {
                     queueTasks(tasks, [
-                        'browserify:main',
-                        'browserify:head'
+                        'browserify:prod'
                     ]);
                 }
             }
@@ -98,7 +96,7 @@ module.exports = function (grunt, loadConfig) {
                     ]);
                 } else {
                     queueTasks(tasks, [
-                        'sass:dist',
+                        'sass:prod',
                         // 'sass:core-comments',
                         'csso:prod'
                         // 'sass-env-vars:clean', //removed because it makes intelli-j delete the css
