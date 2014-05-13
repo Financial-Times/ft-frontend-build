@@ -47,8 +47,10 @@ Note that it's recommended to store yuor templates with your other source code. 
 
     root
       \_ js
-        |   // must use commonjs to require any other js files
-        \_ main.js
+          \_head
+            main.js
+        // each main.js must use commonjs to require any other js files
+        main.js
       \_ sass
         |  // must use sass @import to include any other sass files
         \_ main.scss 
@@ -69,6 +71,8 @@ Only the `app` directory and its contents are required. The remaining directorie
       \_ app
       |   \_ js
       |     \_main
+      |       main.js
+      |     \_head
       |       main.js
       |     \_moduleB
       |       main.js

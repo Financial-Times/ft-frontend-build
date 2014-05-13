@@ -2,7 +2,7 @@ module.exports = function (grunt) {
 
     var ftConfig = require('../grunt-config')(grunt).ft;
     var files = {};
-    files[ftConfig.builtAssetsPath + 'css/main.css'] = '<%= ft.srcPath %><%= ft.defaultModule %>scss/main.scss';
+    files[ftConfig.builtAssetsPath + 'css/main.css'] = '<%= ft.srcPath %>scss/' + (ftConfig.isModular ? 'main/' : '')  + 'main.scss';
 
     return {
         dist: {

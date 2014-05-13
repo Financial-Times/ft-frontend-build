@@ -6,6 +6,8 @@ var deepDefault = _.partialRight(_.merge, _.defaults);
 
 var configContents = require(path.join(process.cwd(), 'responsive-ft-config.js'));
 
+configContents.srcPath = configContents.srcPath + (configContents.isModular ? 'app/' : '');
+
 module.exports = function (grunt) {
     return deepDefault({ft: configContents}, {
         pkg: require(path.join(process.cwd(),'package.json')),
@@ -24,8 +26,7 @@ module.exports = function (grunt) {
             copyIncludeList: [],
             blocks: ['clean', 'tpl', 'js', 'css', 'polyfill', 'assets'],
             skipBlocks: [],
-            parallelTestAndBuild: false,
-            defaultModule: configContents.isModular ? 'app/main/' : ''
+            parallelTestAndBuild: false
         }
     });
 };
