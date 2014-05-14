@@ -1,11 +1,11 @@
 {
-  "name": "responsive-ft-grunt",
+  "name": "ft-frontend-build",
   "description": "Shared grunt configuration for responsive FT.com projects",
   "repository": {
     "type": "git",
-    "url": "http://git.svc.ft.com:8080/scm/fwp/responsive-ft-grunt.git"
+    "url": "https://github.com/Financial-Times/ft-frontend-build.git"
   },
-  "version": "0.5.1",
+  "version": "0.6.1",
   "peerDependencies": {
     "grunt-cli": "~0.1.9",
     "grunt": "~0.4.3",
