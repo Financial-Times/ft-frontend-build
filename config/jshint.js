@@ -51,7 +51,7 @@ module.exports = {
         options: jshintConfigs.node
     },
     browser: {
-        src: ['<%= ft.srcPath %>**/*.js', '!<%= ft.srcPath %>/vendor/**/*.js', '!<%= ft.srcPath %>**/*.hogan.js'],
+        src: ['<%= ft.srcPath %>**/*.js', '!<%= ft.srcPath %>**/vendor/**/*.js'],
         options: jshintConfigs.browser
     },
     test: {
