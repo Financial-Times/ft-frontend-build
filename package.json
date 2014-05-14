@@ -35,13 +35,6 @@
     "debowerify": "0.7.0",
     "grunt-csso": "~0.6.1"
   },
-  "readme": "ERROR: No README data found!",
-  "_id": "responsive-ft-grunt@0.4.8",
-  "dist": {
-    "shasum": "c0d72d835c18cffbb2b5c717e6123a1e8d6a508f"
-  },
-  "_resolved": "git+http://git.svc.ft.com/scm/fwp/responsive-ft-grunt.git#54f97a83c4289c8c114ceaa6275a5b7abc34e42a",
-  "_from": "git+http://git.svc.ft.com/scm/fwp/responsive-ft-grunt.git",
   "dependencies": {
     "lodash": "~2.4.1"
   }
