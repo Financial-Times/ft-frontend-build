@@ -1,8 +1,4 @@
 module.exports = {
-    mustache: {
-        files: ['<%= ft.srcPath %>**/*.mustache', '<%= ft.bowerPath %>**/*.mustache', '!<%= ft.srcPath %>**/tmp/*.mustache'],
-        tasks: ['build:tpl:dev']
-    },
     sass: {
         files: ['<%= ft.srcPath %>**/*.scss', '<%= ft.bowerPath %>**/*.scss', '!<%= ft.srcPath %>**/tmp/*.scss'],
         tasks: ['build:css:dev']

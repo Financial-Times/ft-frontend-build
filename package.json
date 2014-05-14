@@ -33,7 +33,6 @@
     "uglifyify": "2.1.1",
     "textrequireify": "1.0.0",
     "debowerify": "0.7.0",
-    "hogan.js": "~2.0.0",
     "grunt-csso": "~0.6.1"
   },
   "readme": "ERROR: No README data found!",

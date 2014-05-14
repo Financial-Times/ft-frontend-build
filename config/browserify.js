@@ -1,35 +1,31 @@
-module.exports = function (grunt) {
+var ftConfig = require('../grunt-config')().ft;
 
+var files = {
+    '<%= ft.builtAssetsPath %>js/main.js': '<%= ft.srcPath %>' + (ftConfig.isModular ? 'main/' : 'js/')  + 'main.js',
+    '<%= ft.builtAssetsPath %>js/head.js': '<%= ft.srcPath %>' + (ftConfig.isModular ? '' : 'js/') + 'head/main.js'
+};
 
-    var ftConfig = require('../grunt-config')(grunt).ft;
+ftConfig.jsModules.forEach(function (module) {
+    files['<%= ft.builtAssetsPath %>js/' + module + '.js'] = '<%= ft.srcPath %>' + module + '/main.js';
+});
 
-    var files = {
-        '<%= ft.builtAssetsPath %>js/main.js': '<%= ft.srcPath %>js/' + (ftConfig.isModular ? 'main/' : '')  + 'main.js',
-        '<%= ft.builtAssetsPath %>js/head.js': '<%= ft.srcPath %>js/head/main.js'
-    };
-    
-    ftConfig.jsModules.forEach(function (module) {
-        files['<%= ft.builtAssetsPath %>js/' + module + '.js'] = '<%= ft.srcPath %>js/' + module + '/main.js';
-    });
-
-    return {
-        prod: {
-            files: files,
-            options: {
-                transform: ['debowerify', 'textrequireify', ['uglifyify', {global: true}]],
-                bundleOptions: {
-                    debug: false
-                }
-            }
-        },
-        dev: {
-            files: files,
-            options: {
-                transform: ['debowerify', 'textrequireify'],
-                bundleOptions: {
-                    debug: true
-                }
+module.exports = {
+    prod: {
+        files: files,
+        options: {
+            transform: ['debowerify', 'textrequireify', ['uglifyify', {global: true}]],
+            bundleOptions: {
+                debug: false
             }
         }
-    };
+    },
+    dev: {
+        files: files,
+        options: {
+            transform: ['debowerify', 'textrequireify'],
+            bundleOptions: {
+                debug: true
+            }
+        }
+    }
 };

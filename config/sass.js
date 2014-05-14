@@ -1,30 +1,29 @@
-module.exports = function (grunt) {
+'use strict';
 
-    var ftConfig = require('../grunt-config')(grunt).ft;
-    var files = {
-        '<%= ft.builtAssetsPath %>css/main.css': '<%= ft.srcPath %>scss/' + (ftConfig.isModular ? 'main/' : '')  + 'main.scss'
-    };
+var ftConfig = require('../grunt-config')().ft;
+var files = {
+    '<%= ft.builtAssetsPath %>css/main.css': '<%= ft.srcPath %>' + (ftConfig.isModular ? 'main/' : 'scss/')  + 'main.scss'
+};
 
-    ftConfig.cssModules.forEach(function (module) {
-        files['<%= ft.builtAssetsPath %>css/' + module + '.css'] = ['<%= ft.srcPath %>scss/' + module + '/main.scss'];
-    });
+ftConfig.cssModules.forEach(function (module) {
+    files['<%= ft.builtAssetsPath %>css/' + module + '.css'] = ['<%= ft.srcPath %>' + module + '/main.scss'];
+});
 
-    return {
-        prod: {
-            options: {
-                loadPath: ['.', '<%= ft.bowerPath %>'],
-                style: 'compressed'
-            },
-            files: files
+module.exports = {
+    prod: {
+        options: {
+            loadPath: ['.', '<%= ft.bowerPath %>'],
+            style: 'compressed'
         },
-        dev: {
-            options: {
-                loadPath: ['.', '<%= ft.bowerPath %>'],
-                style: 'expanded'
-            },
-            files: files
-        }
-    };
+        files: files
+    },
+    dev: {
+        options: {
+            loadPath: ['.', '<%= ft.bowerPath %>'],
+            style: 'expanded'
+        },
+        files: files
+    }
 };
 
 // ,

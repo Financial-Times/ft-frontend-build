@@ -57,18 +57,7 @@ module.exports = function (grunt, loadConfig) {
                 queueTasks(tasks, ['clean:assets']);
             }
         },
-        tpl: function (mode, env, tasks) {
-            if (!mode || mode === 'tpl') {
-                queueTasks(tasks, [
-                    // constructs origami templates
-                    'copy:mustache-src-to-target',
-                    'build-templates',
-                    'minify-inline-head-script',
-                    'hogan-compile',
-                    'copy:mustache-target-to-public'
-                ]);
-            }
-        },
+
         js: function (mode, env, tasks) {
             if (!mode || mode === 'js') {
                 if (env === 'dev') {

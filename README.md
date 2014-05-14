@@ -43,7 +43,7 @@ responsive-ft-grunt, where possible, favours convention over configuration so it
 
 Where your app will only ever build a single css file and a single js file. *You should set `isModular: false` in your config*.
 
-Note that it's recommended to store yuor templates with your other source code. This unusual approach is partly for code organisation reasons, but also allows you to use a build step that makes it easier to consume origami components' templates.
+Note that it's recommended to store yuor templates with your other source code. This unusual approach is partly for code organisation reasons, but will allow you to use a planned build step that will make it easier to consume origami components' templates.
 
     root
       \_ js
@@ -58,6 +58,7 @@ Note that it's recommended to store yuor templates with your other source code. 
         |  // If you need to output mustache variables into a your js e.g. domain specific config
         |  // putting it in this file will mean responsive-ft-grunt minifies it for you
         \_ inlineHeadScript.mustache 
+        \_ another-template.mustache
 
 ### Modular
 
@@ -69,24 +70,23 @@ Only the `app` directory and its contents are required. The remaining directorie
 
     root
       \_ app
-      |   \_ js
-      |     \_main
-      |       main.js
-      |     \_head
-      |       main.js
-      |     \_moduleB
-      |       main.js
-      |   \_ sass
-      |     \_main
-      |       main.scss
-      |     \_moduleB
-      |       main.scss
-      |   \_ tpl
-      |     \_main
-      |       main.mustache
-      |     \_moduleB
-      |       main.mustache
+      |   \_ main
+      |     \_js
+      |     \_scss
+      |     \_tpl
+      |       a-template.mustache
+      |     main.js
+      |     main.scss
+      |   \_ head
+      |     main.js
       |     inlineHeadScript.mustache 
+      |   \_ moduleB
+      |     \_js
+      |     \_scss
+      |     \_tpl
+      |       a-template.mustache
+      |     main.js
+      |     main.scss
       |
       |  // sass, js and templates for definining the appearance and behaviour of self-contained features of your app
       |  // A good idea to keep the [origami spec](http://origami.ft.com) in mind while writing these
@@ -104,7 +104,7 @@ Only the `app` directory and its contents are required. The remaining directorie
       \_ vendor
 
 
-Where possible it's a good idea to keep your src code away from any directories your server framework expects your static assets to be as this may result in it executing some 'magic' which conflicts with what responsive-ft-grunt is trying to do e.g. dropwizard will copy your src templates directly into your public root, overwriting any changes you may have made to them.
+Where possible it's a good idea to keep your front-end src code away from any directories your server framework expects your static assets to be as this may result in it executing some 'magic' which conflicts with what responsive-ft-grunt is trying to do e.g. dropwizard will copy `./src/main/resources` directly into your public root.
 
 ## Configuration
 
@@ -115,14 +115,13 @@ These should all be set in `responsive-ft.config.js`, which exports a javascript
 All the paths below should begin with `./` and end in `/`
 
 * `bowerPath` *'./bower_components/'*: Path to where your bower components are installed (as set in your `.bowerrc` file). Even though it may seem counterintuitive it's best to keep this outside where your source code resides as it'll make your build quicker
-* `srcPath`: Location of your front-end source files
-* `stagingPath`: In certain circumstances you may need to stage some of your built source files before copying them to your public root. They will be placed in this directory
-* `builtTemplatesPath`: Directory to place your app's built templates in 
-* `builtAssetsPath`: Directory to place all your app's built static assets (including css and js) in. To include an assets version in the path use `{{version}}` and this will be replaced at build time with teh asset parameter pased in (see Running -> parameters below)
+* `srcPath` *'./src/'*: Location of your front-end source files
+* `stagingPath` *'./tmp/'*: Location for temporary build files
+* `builtAssetsPath` *'./static/'*: Directory to place all your app's built static assets (including css and js) in. To include an assets version in the path use `{{version}}` and this will be replaced at build time with teh asset parameter pased in (see Running -> parameters below)
 
 ### Build steps
 
-* `blocks` *['clean', 'tpl', 'js', 'css', 'polyfill', 'assets']*: Blocks of build tasks to carry out. The names refer to blocks of tasks that carry out the following
+* `blocks` *['clean', 'js', 'css', 'polyfill', 'assets']*: Blocks of build tasks to carry out. The names refer to blocks of tasks that carry out the following
     
     * `clean`: removes the files created by the last build
     * `tpl`: builds templates which correctly include origami modules and their dependencies' templates and minifies your inline head script
@@ -140,9 +139,7 @@ All the paths below should begin with `./` and end in `/`
     These functions may limit themselves to simple operations e.g. setting a dynamic property on the grunt config. If, however, the intention is for it to run some grunt tasks they **must not** use `grunt.task.run`; instead they should push/concat these tasks onto the `tasks` array provided.
 
 * `skipBlocks` *[]*: List of named build blocks to skip  
-* `skipTasks` *[]*: List of specific grunt-tasks to skip. e.g. `copy:tpl` will skip copying templates, whereas `copy` will skip `copy:tpl`, `copy:js` etc...
-* `parallelTestAndBuild` *false*: **Unimplemented**
-* `stageAssets` *[]*: types of assets that need to be staged rather than copied directly to the built app. The naming convention follows that of `blocks`
+* `skipTasks` *[]*: List of specific grunt-tasks to skip. e.g. `copy:css` will skip copying css, whereas `copy` will skip `copy:css`, `copy:js` etc...
 
 
 ### Modules
@@ -187,13 +184,7 @@ By default these shoudl be written in jasmine and will be run using karam, but c
 /*
 TODO
 
-head js browserify & concat
-build origami templates
-lazy loading
 test paths
-ability for browserify and sass builds to be passed in names of modules
-staging templates
 modernizr + modernizrless versions of tests
-hogan-compile
 
 */

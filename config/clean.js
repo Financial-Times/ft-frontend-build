@@ -1,6 +1,5 @@
 module.exports = {
     tmp: ['<%= ft.srcPath %>tmp'],
-    tpl: ['<%= ft.builtTemplatesPath %>'],
     js: ['<%= ft.builtAssetsPath %>js'],
     css: ['<%= ft.builtAssetsPath %>css'],
     assets: ['<%= ft.builtAssetsPath %>', '!<%= ft.builtAssetsPath %>css', '!<%= ft.builtAssetsPath %>js']
