@@ -66,7 +66,7 @@ module.exports = function (grunt, loadConfig) {
         polyfill: function (mode, env, tasks) {
             if (!mode || mode === 'js' || mode === 'polyfill') {
                 if (env === 'dev') {
-                    grunt.file.copy(path.join(process.cwd(), 'node_modules/responsive-ft-grunt/assets/modernizr-dev.js'), config.ft.stagingPath + 'modernizr-custom.js');
+                    grunt.file.copy(path.join(process.cwd(), 'node_modules/ft-frontend-build/assets/modernizr-dev.js'), config.ft.stagingPath + 'modernizr-custom.js');
                 } else {
                     queueTasks(tasks, [
                         // analyze styles and scripts to generate custom modernizr build
@@ -98,7 +98,7 @@ module.exports = function (grunt, loadConfig) {
     var tasks = [];
 
     require('load-grunt-config')(grunt, deepDefault((loadConfig || {}), {
-        configPath: path.join(process.cwd(), 'node_modules/responsive-ft-grunt/config'),
+        configPath: path.join(process.cwd(), 'node_modules/ft-frontend-build/config'),
         loadGruntTasks: {
             config: require('./package.json')
         },
@@ -107,7 +107,7 @@ module.exports = function (grunt, loadConfig) {
 
     grunt.config.set('watch', _.defaults(config.ft.watch, grunt.config.get('watch')));
 
-    grunt.loadTasks(path.join(process.cwd(), 'node_modules/responsive-ft-grunt/tasks'));
+    grunt.loadTasks(path.join(process.cwd(), 'node_modules/ft-frontend-build/tasks'));
 
     grunt.registerTask('test', [
         'jshint',
