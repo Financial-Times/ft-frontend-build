@@ -5,7 +5,7 @@
     "type": "git",
     "url": "http://git.svc.ft.com:8080/scm/fwp/responsive-ft-grunt.git"
   },
-  "version": "0.5.1",
+  "version": "feature/configurable-version",
   "peerDependencies": {
     "grunt-cli": "~0.1.9",
     "grunt": "~0.4.3",
