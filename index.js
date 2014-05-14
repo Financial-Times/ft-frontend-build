@@ -94,7 +94,7 @@ module.exports = function (grunt, loadConfig) {
             }
         },
         polyfill: function (mode, env, tasks) {
-            if (!mode || mode === 'js') {
+            if (!mode || mode === 'js' || mode === 'polyfill') {
                 if (env === 'dev') {
                     grunt.file.copy(path.join(process.cwd(), 'node_modules/responsive-ft-grunt/assets/modernizr-dev.js'), config.ft.stagingPath + 'modernizr-custom.js');
                 } else {

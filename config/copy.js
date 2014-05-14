@@ -49,14 +49,18 @@ module.exports = {
                 cwd: '<%= ft.bowerPath %>',
                 src: ftConfig.bowerPolyfills,
                 rename: function (dest, file) {
-                    file = file.split('/');
-                    return dest + file[0] + '.js';
+                    // name after the bower module name
+                    return dest + file.split('/').shift() + '.js';
                 },
                 dest: '<%= ft.builtAssetsPath %>js/polyfills/'
             },{
                 expand: true,
-                cwd: '<%= ft.srcPath %>/vendor',
+                cwd: '<%= ft.srcPath %>',
                 src: ftConfig.srcPolyfills,
+                rename: function (dest, file) {
+                    // name after the file name
+                    return dest + file.split('/').pop();
+                },
                 dest: '<%= ft.builtAssetsPath %>js/polyfills/'
             }
         ]
