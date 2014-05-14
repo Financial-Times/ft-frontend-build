@@ -1,20 +1,17 @@
 'use strict';
 
-module.exports = function (grunt) {
+var ftConfig = require('../grunt-config')().ft;
 
-    var ftConfig = require('../grunt-config')(grunt).ft;
+var files = {
+    '<%= ft.builtAssetsPath %>css/main.css': ['<%= ft.builtAssetsPath %>css/main.css']
+};
 
-    var files = {
-        '<%= ft.builtAssetsPath %>css/main.css': ['<%= ft.builtAssetsPath %>css/main.css']
-    };
-    
-    ftConfig.cssModules.forEach(function (module) {
-        files['<%= ft.builtAssetsPath %>css/' + module + '.css'] = ['<%= ft.builtAssetsPath %>css/' + module + '.css'];
-    });
+ftConfig.cssModules.forEach(function (module) {
+    files['<%= ft.builtAssetsPath %>css/' + module + '.css'] = ['<%= ft.builtAssetsPath %>css/' + module + '.css'];
+});
 
-    return {
-        prod: {
-            files: files
-        }
-    };
+module.exports = {
+    prod: {
+        files: files
+    }
 };

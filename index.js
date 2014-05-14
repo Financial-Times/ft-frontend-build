@@ -20,6 +20,7 @@ module.exports = function (grunt, loadConfig) {
 
         return queue;
     }
+
     require('load-grunt-config')(grunt, deepDefault(loadConfig, {
         configPath: path.join(process.cwd(), 'node_modules/responsive-ft-grunt/config'),
         loadGruntTasks: {
@@ -27,6 +28,8 @@ module.exports = function (grunt, loadConfig) {
         },
         config: config
     }));
+
+    grunt.config.set('watch', _.defaults(config.ft.watch, grunt.config.get('watch'));
 
     var tasks = [];
 

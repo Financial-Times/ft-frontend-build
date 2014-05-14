@@ -12,5 +12,6 @@ module.exports = {
     copyIncludeList: [],
     blocks: ['clean', 'js', 'css', 'polyfill', 'assets'],
     skipBlocks: [],
+    watch: {}
 };
 

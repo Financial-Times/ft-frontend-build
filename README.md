@@ -152,6 +152,7 @@ All the paths below should begin with `./` and end in `/`
 * `copyIncludeList` *[]*: List of files and directories to include when copying static assets to the built app
 * `bowerPolyfills` *[]*: Paths to polyfills installed via bower. Note that e.g. `event-listeners/EventListener.polyfill.min.js` will be copied to `js/polyfills/event-listeners.js` in the built app
 * `srcPolyfills` *[]*: Paths to polyfills not installed via bower. Note that e.g. `src/path/vendor/es6-promises.js` will be copied to `js/polyfills/es6-promises.js` in the built app
+* `watch` *{}*: Configuration to be passed in to grunt-contrib-watch. By default responsive-ft-grunt's `watch` task watches for changes in all scss and js files in your bower or src directories 
 
 
 ## Running using the CLI
