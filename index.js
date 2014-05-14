@@ -51,8 +51,6 @@ module.exports = function (grunt, loadConfig) {
         css: function (mode, env, tasks) {
             if (!mode || mode === 'css') {
                 
-                queueTasks(tasks, ['sass-env-vars:create']);
-                
                 if (env === 'dev') {
                     queueTasks(tasks, [
                         'sass:dev'
