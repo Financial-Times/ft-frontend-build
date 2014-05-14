@@ -14,7 +14,7 @@ The below will probably need to be run as superuser
 
 If your project does not already have a `package.json` run `npm init` in the project root.
 
-Then run `npm install -D ft-frontend-build=https://github.com/Financial-Times/ft-frontend-build.git`
+Then run `npm install -D ft-frontend-build=git+https://github.com/Financial-Times/ft-frontend-build.git`
 
 Finally your GruntFile.js should have the following content
 
