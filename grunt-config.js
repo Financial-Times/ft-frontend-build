@@ -18,13 +18,15 @@ module.exports = function (grunt) {
 
     configContents.assetVersion = grunt.option('assetVersion') || '0.0.1';
 
-    configContents.srcPath = configContents.srcPath + (configContents.isModular ? 'app/' : '');
+
     configContents.builtAssetsPath = configContents.builtAssetsPath.replace('{{version}}', grunt.option('assetVersion') || '0.0.1');
     completeConfig = deepDefault({ft: configContents}, {
         pkg: require(path.join(process.cwd(),'package.json')),
         bwr: require(path.join(process.cwd(),'bower.json')),
         ft: require('./defaults')
     });
+
+    completeConfig.ft.srcPath = completeConfig.ft.srcPath + (completeConfig.ft.isModular ? 'app/' : '');
 
     return completeConfig;
 };
