@@ -93,7 +93,7 @@ module.exports = function (grunt, loadConfig) {
         polyfill: function (mode, env, tasks) {
             if (!mode || mode === 'js') {
                 if (env === 'dev') {
-                    grunt.file.copy('<%= ft.srcPath %>static/js/vendor/modernizr-dev.js', '<%= ft.srcPath %>tmp/modernizr-custom.js');
+                    grunt.file.copy(path.join(process.cwd(), 'node_modules/responsive-ft-grunt/assets/modernizr-dev.js'), '<%= ft.stagingPath %>modernizr-custom.js');
                 } else {
                     queueTasks(tasks, [
                         // analyze styles and scripts to generate custom modernizr build

@@ -1,7 +1,7 @@
 module.exports = {
     prod: {
         devFile: '<%= ft.bowerPath %>modernizr/modernizr.js', // [REQUIRED] Path to the build you're using for development.
-        outputFile: '<%= ft.srcPath %>tmp/modernizr-custom.js', // [REQUIRED] Path to save out the built file.
+        outputFile: '<%= ft.stagingPath %>modernizr-custom.js', // [REQUIRED] Path to save out the built file.
         extra: {
             shiv: true,
             printshiv: false,
