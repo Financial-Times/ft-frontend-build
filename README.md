@@ -49,16 +49,16 @@ Note that it's recommended to store yuor templates with your other source code. 
       \_ js
           \_head
             main.js
+          |  // If you need to output mustache variables into a your js e.g. domain specific config
+          |  // putting it in this file will mean responsive-ft-grunt minifies it for you
+          \_ inlineScript.mustache 
         // each main.js must use commonjs to require any other js files
         main.js
       \_ sass
         |  // must use sass @import to include any other sass files
         \_ main.scss 
       \_ tpl
-        |  // If you need to output mustache variables into a your js e.g. domain specific config
-        |  // putting it in this file will mean responsive-ft-grunt minifies it for you
-        \_ inlineHeadScript.mustache 
-        \_ another-template.mustache
+        \_ a-template.mustache
 
 ### Modular
 
@@ -79,7 +79,7 @@ Only the `app` directory and its contents are required. The remaining directorie
       |     main.scss
       |   \_ head
       |     main.js
-      |     inlineHeadScript.mustache 
+      |     inlineScript.mustache 
       |   \_ moduleB
       |     \_js
       |     \_scss
@@ -117,6 +117,7 @@ All the paths below should begin with `./` and end in `/`
 * `bowerPath` *'./bower_components/'*: Path to where your bower components are installed (as set in your `.bowerrc` file). Even though it may seem counterintuitive it's best to keep this outside where your source code resides as it'll make your build quicker
 * `srcPath` *'./src/'*: Location of your front-end source files
 * `stagingPath` *'./tmp/'*: Location for temporary build files
+* `inlineHeadScriptDestinations` *[]*: Location(s) to copy your inline head script to
 * `builtAssetsPath` *'./static/'*: Directory to place all your app's built static assets (including css and js) in. To include an assets version in the path use `{{version}}` and this will be replaced at build time with teh asset parameter pased in (see Running -> parameters below)
 
 ### Build steps

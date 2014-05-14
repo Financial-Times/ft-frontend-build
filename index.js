@@ -1,18 +1,15 @@
 module.exports = function (grunt, loadConfig) {
     "use strict";
-    loadConfig = loadConfig || {};
+
     var path = require('path');
     var _ = require('lodash');
     var deepDefault = _.partialRight(_.merge, function deep(a, b) {
       return _.merge(a, b, deep);
     });
-    var config = require('./grunt-config')(grunt);
-
     function queueTasks(queue, tasks) {
 
         // allows product devs to skip individual steps of the build
         tasks.forEach(function (task) {
-            // console.log(task.split(':')[0]);
             if (!(config.ft.skipTasks.indexOf(task) > -1 || config.ft.skipTasks.indexOf(task.split(':')[0]) > -1)) {
                 queue.push(task);
             }
@@ -21,38 +18,15 @@ module.exports = function (grunt, loadConfig) {
         return queue;
     }
 
-    require('load-grunt-config')(grunt, deepDefault(loadConfig, {
-        configPath: path.join(process.cwd(), 'node_modules/responsive-ft-grunt/config'),
-        loadGruntTasks: {
-            config: require('./package.json')
-        },
-        config: config
-    }));
-
-    grunt.config.set('watch', _.defaults(config.ft.watch, grunt.config.get('watch'));
-
-    var tasks = [];
-
-    grunt.loadTasks(path.join(process.cwd(), 'node_modules/responsive-ft-grunt/tasks'));
-
-    // Tasks available to run
-    grunt.registerTask('test', [
-        'jshint',
-        'karma:phantom'
-    ]);
-
-    grunt.registerTask('browserTest', [
-        'karma:browser'
-    ]);
 
     var buildBlocks = {
         clean: function (mode, env, tasks) {
             if (!mode || mode === 'js' || mode === 'polyfill') {
                 queueTasks(tasks, ['clean:js']);
-            } 
+            }
             if (!mode || mode === 'css') {
                 queueTasks(tasks, ['clean:css']);
-            } 
+            }
             if (!mode || mode === 'assets') {
                 queueTasks(tasks, ['clean:assets']);
             }
@@ -63,11 +37,13 @@ module.exports = function (grunt, loadConfig) {
                 if (env === 'dev') {
                     queueTasks(tasks, [
                         'jshint:browser',
-                        'browserify:dev'
+                        'browserify:dev',
+                        'inline-head-script:dev'
                     ]);
                 } else {
                     queueTasks(tasks, [
-                        'browserify:prod'
+                        'browserify:prod',
+                        'inline-head-script:prod'
                     ]);
                 }
             }
@@ -79,16 +55,12 @@ module.exports = function (grunt, loadConfig) {
                 
                 if (env === 'dev') {
                     queueTasks(tasks, [
-                        'sass:dev',
-                        // 'sass:core-comments'
-                        // 'sass-env-vars:clean', //removed because it makes intelli-j delete the css
+                        'sass:dev'
                     ]);
                 } else {
                     queueTasks(tasks, [
                         'sass:prod',
-                        // 'sass:core-comments',
                         'csso:prod'
-                        // 'sass-env-vars:clean', //removed because it makes intelli-j delete the css
                     ]);
                 }
             }
@@ -111,9 +83,7 @@ module.exports = function (grunt, loadConfig) {
                 if (env !== 'dev') {
                     queueTasks(tasks, [
                         'uglify:head',
-                        'copy:polyfills',
-                        // discard the modernizr custom build
-                        'clean:tmp'
+                        'copy:polyfills'
                     ]);
                 }
             }
@@ -125,7 +95,30 @@ module.exports = function (grunt, loadConfig) {
             }
         }
     };
-    
+
+    var config = require('./grunt-config')(grunt);
+    var tasks = [];
+
+    require('load-grunt-config')(grunt, deepDefault((loadConfig || {}), {
+        configPath: path.join(process.cwd(), 'node_modules/responsive-ft-grunt/config'),
+        loadGruntTasks: {
+            config: require('./package.json')
+        },
+        config: config
+    }));
+
+    grunt.config.set('watch', _.defaults(config.ft.watch, grunt.config.get('watch')));
+
+    grunt.loadTasks(path.join(process.cwd(), 'node_modules/responsive-ft-grunt/tasks'));
+
+    grunt.registerTask('test', [
+        'jshint',
+        'karma:phantom'
+    ]);
+
+    grunt.registerTask('browserTest', [
+        'karma:browser'
+    ]);
    
     grunt.registerTask('build', 'Building the front end', function (mode, env) {
 
@@ -137,8 +130,9 @@ module.exports = function (grunt, loadConfig) {
         }
 
         var blocks = [];
+
         config.ft.blocks.forEach(function (block) {
-            if (config.ft.skipBlocks.indexOf(block)=== -1) {
+            if (config.ft.skipBlocks.indexOf(block) === -1) {
                 blocks.push(block);
             }
         });
