@@ -44,9 +44,6 @@ module.exports = function (grunt, loadConfig) {
 
     var buildBlocks = {
         clean: function (mode, env, tasks) {
-            if (!mode || mode === 'tpl') {
-                queueTasks(tasks, ['clean:tpl']);
-            } 
             if (!mode || mode === 'js' || mode === 'polyfill') {
                 queueTasks(tasks, ['clean:js']);
             } 
