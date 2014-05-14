@@ -1,21 +1,28 @@
+'use strict';
+
+var ftConfig = require('../grunt-config')().ft;
+var files = {
+    '<%= ft.builtAssetsPath %>css/main.css': '<%= ft.srcPath %>' + (ftConfig.isModular ? 'main/' : 'scss/')  + 'main.scss'
+};
+
+ftConfig.cssModules.forEach(function (module) {
+    files['<%= ft.builtAssetsPath %>css/' + module + '.css'] = ['<%= ft.srcPath %>' + module + '/main.scss'];
+});
+
 module.exports = {
-    dist: {
+    prod: {
         options: {
             loadPath: ['.', '<%= ft.bowerPath %>'],
             style: 'compressed'
         },
-        files: {
-            '<%= ft.builtAssetsPath %>css/main.css': '<%= ft.srcPath %>app/sass/main.scss'
-        }
+        files: files
     },
     dev: {
         options: {
             loadPath: ['.', '<%= ft.bowerPath %>'],
             style: 'expanded'
         },
-        files: {
-            '<%= ft.builtAssetsPath %>css/main.css': '<%= ft.srcPath %>app/sass/main.scss'
-        }
+        files: files
     }
 };
 
@@ -26,7 +33,7 @@ module.exports = {
 //             style: 'compressed'
 //         },
 //         files: {
-//             '<%= ft.builtAssetsPath %>css/core-comments.css': '<%= ft.srcPath %>static/sass/article/core-comments.scss'
+//             '<%= ft.builtAssetsPath %>css/core-comments.css': '<%= ft.srcPath %>static/scss/article/core-comments.scss'
 //         }
 //     }
 // };

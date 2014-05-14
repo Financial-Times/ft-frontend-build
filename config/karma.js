@@ -1,6 +1,6 @@
 'use strict';
 
-var ftConfig = require(require('path').join(process.cwd(), 'grunt-config.js'));
+var ftConfig = require('../grunt-config')().ft;
 
 var files = ftConfig.bowerPolyfills.map(function(path) {
   return ftConfig.bowerPath + path;
@@ -83,6 +83,5 @@ module.exports = {
         dir: 'coverage/'
       }
     }
-  }
-};
-
+}
+};  
