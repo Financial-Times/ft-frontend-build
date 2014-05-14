@@ -6,7 +6,7 @@ var deepDefault = _.partialRight(_.merge, function deep(a, b) {
   return _.merge(a, b, deep);
 });
 
-var configContents = require(path.join(process.cwd(), 'responsive-ft-config.js'));
+var configContents = require(path.join(process.cwd(), 'ft-frontend-config.js'));
 
 var completeConfig;
 

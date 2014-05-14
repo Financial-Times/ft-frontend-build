@@ -2,7 +2,7 @@
 
 module.exports = function(grunt) {
 
-    var ftConfig = require('../grunt-config')().ft;
+    var ftConfig = require('../get-config')().ft;
 
     grunt.registerTask('inline-head-script', 'Removes whitespace from line-endings of javascript files', function (mode) {
         var pathToInlineHeadScript = ftConfig.srcPath + (ftConfig.isModular ? '' : 'js/') + 'head/inlineScript.mustache';

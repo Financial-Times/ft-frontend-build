@@ -1,6 +1,6 @@
 'use strict';
 
-var ftConfig = require('../grunt-config')().ft;
+var ftConfig = require('../get-config')().ft;
 
 module.exports = {
     bower: {

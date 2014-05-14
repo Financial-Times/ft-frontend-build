@@ -1,4 +1,4 @@
-var ftConfig = require('../grunt-config')().ft;
+var ftConfig = require('../get-config')().ft;
 
 var files = {
     '<%= ft.builtAssetsPath %>js/main.js': '<%= ft.srcPath %>' + (ftConfig.isModular ? 'main/' : 'js/')  + 'main.js',

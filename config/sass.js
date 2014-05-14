@@ -1,6 +1,6 @@
 'use strict';
 
-var ftConfig = require('../grunt-config')().ft;
+var ftConfig = require('../get-config')().ft;
 var files = {
     '<%= ft.builtAssetsPath %>css/main.css': '<%= ft.srcPath %>' + (ftConfig.isModular ? 'main/' : 'scss/')  + 'main.scss'
 };

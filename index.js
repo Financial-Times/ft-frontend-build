@@ -94,7 +94,7 @@ module.exports = function (grunt, loadConfig) {
         }
     };
 
-    var config = require('./grunt-config')(grunt);
+    var config = require('./get-config')(grunt);
     var tasks = [];
 
     require('load-grunt-config')(grunt, deepDefault((loadConfig || {}), {

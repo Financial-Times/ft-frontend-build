@@ -47,7 +47,7 @@ var jshintrc = JSON.parse(fs.readFileSync('./.jshintrc')),
 
 module.exports = {
     node: {
-        src: ['Gruntfile.js', 'grunt-tasks/**/*.js', 'grunt-config/*.js'],
+        src: ['Gruntfile.js', 'grunt-tasks/**/*.js', 'ft-frontend-config/*.js'],
         options: jshintConfigs.node
     },
     browser: {

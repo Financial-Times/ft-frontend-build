@@ -1,4 +1,4 @@
-# responsive-ft-grunt
+# ft-frontend-build
 
 Configurable and (fairly) infrastructure-agnostic build for a responsive front-end using origami components.
 
@@ -14,11 +14,11 @@ The below will probably need to be run as superuser
 
 If your project does not already have a `package.json` run `npm init` in the project root.
 
-Then run `npm install -D responsive-ft-grunt=git+http://git.svc.ft.com/scm/fwp/responsive-ft-grunt.git`
+Then run `npm install -D ft-frontend-build=https://github.com/Financial-Times/ft-frontend-build.git`
 
 Finally your GruntFile.js should have the following content
 
-    module.exports = require('responsive-ft-grunt');
+    module.exports = require('ft-frontend-build');
 
 ... ok, so while that is fantastically minimal, it's also scarily magical, so you can take back control of your GruntFile by having
 
@@ -26,18 +26,18 @@ Finally your GruntFile.js should have the following content
 
       // your stuff here ...
 
-      require('responsive-ft-grunt')(grunt, load-config);
+      require('ft-frontend-build')(grunt, load-config);
 
       // ... and here
 
       // ... and, for good measure, a bit more here
     }
 
-responsive-ft-grunt uses the excellent [load-grunt-config](https://www.npmjs.org/package/load-grunt-config) plugin which should load any npm grunt-tasks for you. `load-config` can optionally be used to pass in additional config to it.
+ft-frontend-build uses the excellent [load-get-config](https://www.npmjs.org/package/load-get-config) plugin which should load any npm grunt-tasks for you. `load-config` can optionally be used to pass in additional config to it.
 
 ## App structure
 
-responsive-ft-grunt, where possible, favours convention over configuration so it's important your front-end src code adheres to one of the following directory structures (if for some reason your app cannot meet these requirements please contact [Rhys Evans](mailto:rhys.evans@ft.com)).
+ft-frontend-build, where possible, favours convention over configuration so it's important your front-end src code adheres to one of the following directory structures (if for some reason your app cannot meet these requirements please contact [Rhys Evans](mailto:rhys.evans@ft.com)).
 
 ### Non-modular
 
@@ -50,7 +50,7 @@ Note that it's recommended to store yuor templates with your other source code. 
           \_head
             main.js
           |  // If you need to output mustache variables into a your js e.g. domain specific config
-          |  // putting it in this file will mean responsive-ft-grunt minifies it for you
+          |  // putting it in this file will mean ft-frontend-build minifies it for you
           \_ inlineScript.mustache 
         // each main.js must use commonjs to require any other js files
         main.js
@@ -104,11 +104,11 @@ Only the `app` directory and its contents are required. The remaining directorie
       \_ vendor
 
 
-Where possible it's a good idea to keep your front-end src code away from any directories your server framework expects your static assets to be as this may result in it executing some 'magic' which conflicts with what responsive-ft-grunt is trying to do e.g. dropwizard will copy `./src/main/resources` directly into your public root.
+Where possible it's a good idea to keep your front-end src code away from any directories your server framework expects your static assets to be as this may result in it executing some 'magic' which conflicts with what ft-frontend-build is trying to do e.g. dropwizard will copy `./src/main/resources` directly into your public root.
 
 ## Configuration
 
-These should all be set in `responsive-ft.config.js`, which exports a javascript object defining each property (at the top-level) it needs to override. Default values are in italics.
+These should all be set in `ft-frontend-config.js`, which exports a javascript object defining each property (at the top-level) it needs to override. Default values are in italics.
 
 ### Paths
 
@@ -153,7 +153,7 @@ All the paths below should begin with `./` and end in `/`
 * `copyIncludeList` *[]*: List of files and directories to include when copying static assets to the built app
 * `bowerPolyfills` *[]*: Paths to polyfills installed via bower. Note that e.g. `event-listeners/EventListener.polyfill.min.js` will be copied to `js/polyfills/event-listeners.js` in the built app
 * `srcPolyfills` *[]*: Paths to polyfills not installed via bower. Note that e.g. `src/path/vendor/es6-promises.js` will be copied to `js/polyfills/es6-promises.js` in the built app
-* `watch` *{}*: Configuration to be passed in to grunt-contrib-watch. By default responsive-ft-grunt's `watch` task watches for changes in all scss and js files in your bower or src directories 
+* `watch` *{}*: Configuration to be passed in to grunt-contrib-watch. By default ft-frontend-build's `watch` task watches for changes in all scss and js files in your bower or src directories 
 
 
 ## Running using the CLI
