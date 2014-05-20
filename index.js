@@ -148,8 +148,10 @@ module.exports = function (grunt, loadConfig) {
         });
 
         blocks.forEach(function (block) {
-            if (typeof block === 'string') {
+            if (typeof block === 'string' && buildBlocks[block]) {
                 buildBlocks[block](mode, env, tasks);
+            } else if (typeof block === 'string') {
+                tasks.push(block);
             } else if (typeof block === 'function') {
                 block(mode, env, tasks, grunt);
             }

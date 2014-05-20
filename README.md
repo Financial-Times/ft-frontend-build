@@ -130,6 +130,8 @@ All the paths below should begin with `./` and end in `/`
     * `css`: runs sass on all your css modules and copies them to your built app
     * `polyfill`: generates a modernizr build and copies any polyfills across to your built app
     * `assets`: copies other static assets across to your built app
+
+    Any other strings added to the blocks array must be the names of grunt tasks you want to run as part of *every* build
     
     In addition to these strings you can also put functions in the array of the form `function (sub, env, tasks, grunt) {}` where
     * `sub`: the sub-section of the build which has been called (see section on `Running` below)
