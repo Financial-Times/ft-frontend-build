@@ -122,11 +122,11 @@ All the paths below should begin with `./` and end in `/`
 
 ### Build steps
 
-* `blocks` *['clean', 'js', 'css', 'polyfill', 'assets']*: Blocks of build tasks to carry out. The names refer to blocks of tasks that carry out the following
+* `blocks` *['clean', 'tpl', 'js', 'css', 'polyfill', 'assets']*: Blocks of build tasks to carry out. The names refer to blocks of tasks that carry out the following
     
     * `clean`: removes the files created by the last build
-    * `tpl`: builds templates which correctly include origami modules and their dependencies' templates and minifies your inline head script
-    * `js`: browserifies all your js modules and copies them to your built app
+    * `tpl`: builds templates which correctly include origami modules and their dependencies' templates
+    * `js`: browserifies all your js modules and copies them to your built app. Also minifies your inline head script template
     * `css`: runs sass on all your css modules and copies them to your built app
     * `polyfill`: generates a modernizr build and copies any polyfills across to your built app
     * `assets`: copies other static assets across to your built app
@@ -154,6 +154,23 @@ All the paths below should begin with `./` and end in `/`
 * `bowerPolyfills` *[]*: Paths to polyfills installed via bower. Note that e.g. `event-listeners/EventListener.polyfill.min.js` will be copied to `js/polyfills/event-listeners.js` in the built app
 * `srcPolyfills` *[]*: Paths to polyfills not installed via bower. Note that e.g. `src/path/vendor/es6-promises.js` will be copied to `js/polyfills/es6-promises.js` in the built app
 * `watch` *{}*: Configuration to be passed in to grunt-contrib-watch. By default ft-frontend-build's `watch` task watches for changes in all scss and js files in your bower or src directories 
+* `templating`: Configuration object for constructing your app's templates when they require origami modules' templates. The `type` property (currently only accepting the value 'hogan-express') specifies the templating system you are using, and the remaining properties specify options for parsing the templates
+
+#### Hogan-express templating options
+
+*Note that after the build has completed a json file `ft-frontend-template-map.json` will be created in the root of your project and this should be required when registerin gpartials with express.*
+
+*`srcDirectory` *'./templates/'*: The directory where your templates are located
+*`overrides` *{}*: Object containing variables in origami templates whose values shoudl be rewritten e.g.
+          
+          'o-ft-header': { // will run over all variables in o-ft-header's template
+              _namespace: 'header', // will replace 'o-ft-header.' with 'header.' as the namespace for all variables in the template 
+              'topbar-items': 'o-ft-legacy-signin' // will replace {{o-ft-header.topbar-items}} with {{> o-ft-legacy-signin}} i.e. allows you to replace a placeholder variable with another module's template
+              encodedLocation: 'encodedLocation' // replaces {{o-ft-header.encodedLocation}} with {{encodedLocation}}
+              advert: '> promo1' // replaces {{o-ft-header.advert}} with {{> promo1}}
+          }
+        
+
 
 
 ## Running using the CLI

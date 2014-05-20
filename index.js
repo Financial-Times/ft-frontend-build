@@ -20,6 +20,7 @@ module.exports = function (grunt, loadConfig) {
 
 
     var buildBlocks = {
+        tpl: function () {},
         clean: function (mode, env, tasks) {
             if (!mode || mode === 'js' || mode === 'polyfill') {
                 queueTasks(tasks, ['clean:js']);
@@ -108,6 +109,17 @@ module.exports = function (grunt, loadConfig) {
     grunt.config.set('watch', _.defaults(config.ft.watch, grunt.config.get('watch')));
 
     grunt.loadTasks(path.join(process.cwd(), 'node_modules/ft-frontend-build/tasks'));
+
+    switch (config.ft.templating.type) {
+        case 'hogan-express' : 
+            buildBlocks.tpl = function (mode, env, tasks) {
+                if (!mode || mode === 'tpl') {
+                    queueTasks(tasks, ['hogan-express']);
+                }
+            };
+            break;
+    }
+
 
     grunt.registerTask('test', [
         'jshint',
