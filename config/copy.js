@@ -19,7 +19,8 @@ module.exports = {
             '!*/README.md',
             '!*/readme.md',
             '!*/demos',
-            '!*/demos/**/*'
+            '!*/demos/**/*',
+            'package.json'
         ]
         .concat(
             (function () {
