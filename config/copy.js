@@ -21,7 +21,6 @@ module.exports = {
             '!*/demos',
             '!*/demos/**/*'
         ]
-        .concat(ftConfig.copyIncludeList)
         .concat(
             (function () {
                 var extras = [];
@@ -34,6 +33,12 @@ module.exports = {
                 }).concat(extras);
             })()
         ),
+        dest: '<%= ft.builtAssetsPath %>'
+    },
+    assets: {
+        expand: true,
+        cwd: '<%= ft.srcPath %>',
+        src: ['**/assets/**/*'],
         dest: '<%= ft.builtAssetsPath %>'
     },
     test: {

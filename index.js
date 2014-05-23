@@ -90,7 +90,7 @@ module.exports = function (grunt, loadConfig) {
         assets: function (mode, env, tasks) {
             if (!mode || mode === 'assets') {
                 // copy static assets
-                queueTasks(tasks, ['copy:bower']);
+                queueTasks(tasks, ['copy:bower', 'copy:assets']);
             }
         }
     };

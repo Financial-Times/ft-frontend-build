@@ -46,6 +46,7 @@ Where your app will only ever build a single css file and a single js file. *You
 Note that it's recommended to store yuor templates with your other source code. This unusual approach is partly for code organisation reasons, but will allow you to use a planned build step that will make it easier to consume origami components' templates.
 
     root
+      \_ assets // images etc.
       \_ js
           \_head
             main.js
@@ -68,9 +69,12 @@ For more complex apps with multiple js and style bundles (for e.g. lazy-loaded f
 
 Only the `app` directory and its contents are required. The remaining directories are suggestions for making your code more reusable; in particular, if you write as much of your code as possible in the `components` directory it will be relatively easy to convert into reusable origami modules in future.
 
+Any directory named `assets` and its contents will be copied (including its full path relative to your src directory) into yuor built static assets directory 
+
     root
       \_ app
       |   \_ main
+      |     \_assets
       |     \_js
       |     \_scss
       |     \_tpl
@@ -151,8 +155,8 @@ All the paths below should begin with `./` and end in `/`
 * `jsModules` *[]*: names of js modules (in addition to main) that need browserifying into separate bundles
 
 ### Individual task config
-* `copyExcludeList` *[]*: List of files and directories to exclude when copying static assets to the built app; by default most things in your bower directory will be copied. Adding a `\` to the end of an entry here will exclude that directory and its entire contents
-* `copyIncludeList` *[]*: List of files and directories to include when copying static assets to the built app
+* `copyExcludeList` *[]*: List of files and subdirectories to exclude when copying static assets from bower_components to the built app; by default most things in your bower directory will be copied. Adding a `\` to the end of an entry here will exclude that directory and its entire contents. Accepts standard globbing patterns.
+* `copyIncludeList` *[]*: List of files and directories to include when copying static assets to the built app. Accepts standard globbing patterns. Remember that any directory with the name `assets` will already be copied to your built assets directory by default
 * `bowerPolyfills` *[]*: Paths to polyfills installed via bower. Note that e.g. `event-listeners/EventListener.polyfill.min.js` will be copied to `js/polyfills/event-listeners.js` in the built app
 * `srcPolyfills` *[]*: Paths to polyfills not installed via bower. Note that e.g. `src/path/vendor/es6-promises.js` will be copied to `js/polyfills/es6-promises.js` in the built app
 * `watch` *{}*: Configuration to be passed in to grunt-contrib-watch. By default ft-frontend-build's `watch` task watches for changes in all scss and js files in your bower or src directories 

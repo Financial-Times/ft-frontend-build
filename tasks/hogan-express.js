@@ -53,7 +53,6 @@ module.exports = function (grunt) {
     function scanMustacheTemplate (path, callback) {
         return grunt.file.read(path).replace(/\{\{(\{)?(?!\!) *([^(?:\}\})]*) *\}?\}\}/g, function (original, isEscaped, content) {
             var mustacheData = analyzeMustacheContent(content);
-            console.log(original, mustacheData);
             return callback(mustacheData, original, isEscaped);
         });
     }
