@@ -49,15 +49,17 @@ Note that it's recommended to store yuor templates with your other source code. 
       \_ assets // images etc.
       \_ js
           \_head
-            main.js
           |  // If you need to output mustache variables into a your js e.g. domain specific config
           |  // putting it in this file will mean ft-frontend-build minifies it for you
           \_ inlineScript.mustache 
-        // each main.js must use commonjs to require any other js files
+        // every top-level js file will be output into a browserified file and must use commonjs to require any other js files
         main.js
+        head.js
+        other-bundle.js
       \_ sass
         |  // must use sass @import to include any other sass files
         \_ main.scss 
+           other-bundle.scss
       \_ tpl
         \_ a-template.mustache
 
@@ -151,8 +153,6 @@ All the paths below should begin with `./` and end in `/`
 
 ### Modules
 * `isModular` *false*: Whether or not the app follows the directory structure for a more complex modular app 
-* `cssModules` *[]*: names of css modules (in addition to main) that need building into separate stylesheets
-* `jsModules` *[]*: names of js modules (in addition to main) that need browserifying into separate bundles
 
 ### Individual task config
 * `copyExcludeList` *[]*: List of files and subdirectories to exclude when copying static assets from bower_components to the built app; by default most things in your bower directory will be copied. Adding a `\` to the end of an entry here will exclude that directory and its entire contents. Accepts standard globbing patterns.

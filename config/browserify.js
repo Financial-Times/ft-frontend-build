@@ -9,10 +9,6 @@ modules.forEach(function(fileName) {
     files['<%= ft.builtAssetsPath %>js/' + moduleName + '.js'] = '<%= ft.srcPath %>/' + fileName;
 });
 
-ftConfig.jsModules.forEach(function (module) {
-    files['<%= ft.builtAssetsPath %>js/' + module + '.js'] = '<%= ft.srcPath %>' + module + '/main.js';
-});
-
 module.exports = {
     prod: {
         files: files,

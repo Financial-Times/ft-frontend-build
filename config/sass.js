@@ -11,11 +11,6 @@ modules.forEach(function(fileName) {
     files['<%= ft.builtAssetsPath %>css/' + moduleName + '.css'] = '<%= ft.srcPath %>/' + fileName;
 });
 
-
-ftConfig.cssModules.forEach(function (module) {
-    files['<%= ft.builtAssetsPath %>css/' + module + '.css'] = ['<%= ft.srcPath %>' + module + '/main.scss'];
-});
-
 module.exports = {
     prod: {
         options: {
