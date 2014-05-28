@@ -52,7 +52,7 @@ Note that it's recommended to store yuor templates with your other source code. 
           |  // If you need to output mustache variables into a your js e.g. domain specific config
           |  // putting it in this file will mean ft-frontend-build minifies it for you
           \_ inlineScript.mustache 
-        // every top-level js file will be output into a browserified file and must use commonjs to require any other js files
+        // every top-level js file will be output into a compiled file, and must use commonjs to require any other js files
         main.js
         head.js
         other-bundle.js
