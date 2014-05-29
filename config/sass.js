@@ -7,7 +7,7 @@ var moduleName;
 var modules = require('../get-modules')('scss');
 
 modules.forEach(function(fileName) {
-    moduleName = fileName.split('/')[0].replace(/\.js$/, '');
+    moduleName = fileName.split('/')[0].replace(/\.scss$/, '');
     files['<%= ft.builtAssetsPath %>css/' + moduleName + '.css'] = '<%= ft.srcPath %>/' + fileName;
 });
 
