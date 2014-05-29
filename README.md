@@ -106,7 +106,7 @@ Any directory named `assets` and its contents will be copied (including its full
       |        main.mustache
       |
       |  // A home for third party resources (mostly js, but could also be css/sass) which, for whichever reason, cannot be @imported/required directly after a bower install. 
-      |  // e.g. the es6-promises polyfill requires npm and a transpiler to make it consumable by browserify, so a built version could be stored here
+      |  // e.g. the es6-promises modernize requires npm and a transpiler to make it consumable by browserify, so a built version could be stored here
       \_ vendor
 
 
@@ -128,13 +128,13 @@ All the paths below should begin with `./` and end in `/`
 
 ### Build steps
 
-* `blocks` *['clean', 'tpl', 'js', 'css', 'polyfill', 'assets']*: Blocks of build tasks to carry out. The names refer to blocks of tasks that carry out the following
+* `blocks` *['clean', 'tpl', 'js', 'css', 'modernize', 'assets']*: Blocks of build tasks to carry out. The names refer to blocks of tasks that carry out the following
     
     * `clean`: removes the files created by the last build
     * `tpl`: builds templates which correctly include origami modules and their dependencies' templates
-    * `js`: browserifies all your js modules and copies them to your built app. Also minifies your inline head script template
+    * `js`: browserifies all your js modules and copies them to your built app. Also minifies your inline head script template and copies any polyfills across to your built app
     * `css`: runs sass on all your css modules and copies them to your built app
-    * `polyfill`: generates a modernizr build and copies any polyfills across to your built app
+    * `modernize`: generates a custom modernizr build
     * `assets`: copies other static assets across to your built app
 
     Any other strings added to the blocks array must be the names of grunt tasks you want to run as part of *every* build
@@ -148,7 +148,7 @@ All the paths below should begin with `./` and end in `/`
     These functions may limit themselves to simple operations e.g. setting a dynamic property on the grunt config. If, however, the intention is for it to run some grunt tasks they **must not** use `grunt.task.run`; instead they should push/concat these tasks onto the `tasks` array provided.
 
 * `skipBlocks` *[]*: List of named build blocks to skip  
-* `skipTasks` *[]*: List of specific grunt-tasks to skip. e.g. `copy:css` will skip copying css, whereas `copy` will skip `copy:css`, `copy:js` etc...
+* `skipTasks` *[]*: List of specific grunt-tasks to skip. e.g. `copy:polyfills` will skip copying css, whereas `copy` will skip `copy:polyfills`, `copy:js` etc...
 
 
 ### Modules

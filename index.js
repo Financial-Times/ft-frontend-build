@@ -22,7 +22,7 @@ module.exports = function (grunt, loadConfig) {
     var buildBlocks = {
         tpl: function () {},
         clean: function (mode, env, tasks) {
-            if (!mode || mode === 'js' || mode === 'polyfill') {
+            if (!mode || mode === 'js') {
                 queueTasks(tasks, ['clean:js']);
             }
             if (!mode || mode === 'css') {
@@ -47,6 +47,8 @@ module.exports = function (grunt, loadConfig) {
                         'inline-head-script:prod'
                     ]);
                 }
+
+                queueTasks(tasks, ['copy:polyfills']);
             }
         },
         css: function (mode, env, tasks) {
@@ -64,8 +66,8 @@ module.exports = function (grunt, loadConfig) {
                 }
             }
         },
-        polyfill: function (mode, env, tasks) {
-            if (!mode || mode === 'js' || mode === 'polyfill') {
+        modernize: function (mode, env, tasks) {
+            if (!mode || mode === 'js' || mode === 'modernize') {
                 if (env === 'dev') {
                     grunt.file.copy(path.join(process.cwd(), 'node_modules/ft-frontend-build/assets/modernizr-dev.js'), config.ft.stagingPath + 'modernizr-custom.js');
                 } else {
@@ -81,8 +83,7 @@ module.exports = function (grunt, loadConfig) {
 
                 if (env !== 'dev') {
                     queueTasks(tasks, [
-                        'uglify:head',
-                        'copy:polyfills'
+                        'uglify:head'
                     ]);
                 }
             }
@@ -111,7 +112,7 @@ module.exports = function (grunt, loadConfig) {
     grunt.loadTasks(path.join(process.cwd(), 'node_modules/ft-frontend-build/tasks'));
 
     switch (config.ft.templating.type) {
-        case 'hogan-express' : 
+        case 'hogan-express' :
             buildBlocks.tpl = function (mode, env, tasks) {
                 if (!mode || mode === 'tpl') {
                     queueTasks(tasks, ['hogan-express']);
