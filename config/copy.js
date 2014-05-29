@@ -7,29 +7,43 @@ module.exports = {
         expand: true,
         cwd: '<%= ft.bowerPath %>',
         src: [
-            '**/*',
-            '!*',
-            '!o-*/main.*',
-            '!o-*/**/*.js',
-            '!o-*/**/*.scss',
-            '!o-*/src',
+            'o-*/**/*', // copy everything from each origami module except ...
+            '!*', // the directory itself (avoids copying an empty directory in the case where everything in teh module isn't required)
+            '!o-*/main.*', // none of the nain entry points as these are handled by browserify, sass, or templating
+            '!o-*/**/*.js', // ditto js
+            '!o-*/**/*.scss', // ditto sass
+            '!o-*/src', // ditto anything in directories which are likely to contain source code
             '!o-*/src/**/*',
-            '!*/bower.json',
+            '!o-*/js',
+            '!o-*/js/**/*',
+            '!o-*/scss',
+            '!o-*/scss/**/*',
+            '!o-*/sass',
+            '!o-*/sass/**/*',
+            '!o-*/css',
+            '!o-*/css/**/*',
+            '!*/bower.json', // metadata and install info not required publicly
             '!*/origami.json',
+            '!*/package.json',
             '!*/README.md',
             '!*/readme.md',
             '!*/demos',
             '!*/demos/**/*',
-            'package.json'
+            '!*/docs',
+            '!*/docs/**/*'
         ]
+        // Add exclude list from config
         .concat(
             (function () {
                 var extras = [];
                 return ftConfig.copyExcludeList.map(function (glob) {
+
+                    // creates '!*/dir' and '!*/dir/**/*' entries for each directory whch isn't required
                     if (glob.charAt(glob.length - 1) === '/') {
                         extras.push('!' + glob.slice(0, glob.length - 1));
                         return '!' + glob + '**/*';
                     }
+                    // otherwise just negate the pattern passed in
                     return '!' + glob;
                 }).concat(extras);
             })()
@@ -39,7 +53,12 @@ module.exports = {
     assets: {
         expand: true,
         cwd: '<%= ft.srcPath %>',
-        src: ['**/assets/**/*'],
+        src: ['**/assets/**/*'].concat(ftConfig.copyIncludeList.map(function (glob) {
+            if (glob.indexOf('./') !== 0) {
+                glob = '<%= ft.bowerPath %>' + glob;
+            }
+            return glob;
+        })),
         dest: '<%= ft.builtAssetsPath %>'
     },
     test: {

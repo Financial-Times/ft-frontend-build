@@ -19,7 +19,11 @@ module.exports = function(grunt) {
     function getOrigamiJson(path) {
         var origamiJson = false;
         if (fs.existsSync(path)) {
-            origamiJson = JSON.parse(fs.readFileSync(path, { encoding: 'utf-8' }));
+            try {
+                origamiJson = JSON.parse(fs.readFileSync(path, { encoding: 'utf-8' }));
+            } catch (e) {
+                console.log('invalid origami.json at' + path);
+            }
         }
         return origamiJson;
     }

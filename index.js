@@ -6,95 +6,12 @@ module.exports = function (grunt, loadConfig) {
     var deepDefault = _.partialRight(_.merge, function deep(a, b) {
       return _.merge(a, b, deep);
     });
-    function queueTasks(queue, tasks) {
 
-        // allows product devs to skip individual steps of the build
-        tasks.forEach(function (task) {
-            if (!(config.ft.skipTasks.indexOf(task) > -1 || config.ft.skipTasks.indexOf(task.split(':')[0]) > -1)) {
-                queue.push(task);
-            }
-        });
-
-        return queue;
-    }
+    // Bundles of build tasks representing more macro-level build steps, so that devs can opt-in/out of them wholesale
+    var buildBlocks = require('./task-bundles');
 
 
-    var buildBlocks = {
-        tpl: function () {},
-        clean: function (mode, env, tasks) {
-            if (!mode || mode === 'js' || mode === 'polyfill') {
-                queueTasks(tasks, ['clean:js']);
-            }
-            if (!mode || mode === 'css') {
-                queueTasks(tasks, ['clean:css']);
-            }
-            if (!mode || mode === 'assets') {
-                queueTasks(tasks, ['clean:assets']);
-            }
-        },
-
-        js: function (mode, env, tasks) {
-            if (!mode || mode === 'js') {
-                if (env === 'dev') {
-                    queueTasks(tasks, [
-                        'jshint:browser',
-                        'browserify:dev',
-                        'inline-head-script:dev'
-                    ]);
-                } else {
-                    queueTasks(tasks, [
-                        'browserify:prod',
-                        'inline-head-script:prod'
-                    ]);
-                }
-            }
-        },
-        css: function (mode, env, tasks) {
-            if (!mode || mode === 'css') {
-                
-                if (env === 'dev') {
-                    queueTasks(tasks, [
-                        'sass:dev'
-                    ]);
-                } else {
-                    queueTasks(tasks, [
-                        'sass:prod',
-                        'csso:prod'
-                    ]);
-                }
-            }
-        },
-        polyfill: function (mode, env, tasks) {
-            if (!mode || mode === 'js' || mode === 'polyfill') {
-                if (env === 'dev') {
-                    grunt.file.copy(path.join(process.cwd(), 'node_modules/ft-frontend-build/assets/modernizr-dev.js'), config.ft.stagingPath + 'modernizr-custom.js');
-                } else {
-                    queueTasks(tasks, [
-                        // analyze styles and scripts to generate custom modernizr build
-                        'origami-modernizr'
-                    ]);
-                }
-                queueTasks(tasks, [
-                    // concatenate modernizr with the head scripts and minify
-                    'concat:modernizr'
-                ]);
-
-                if (env !== 'dev') {
-                    queueTasks(tasks, [
-                        'uglify:head',
-                        'copy:polyfills'
-                    ]);
-                }
-            }
-        },
-        assets: function (mode, env, tasks) {
-            if (!mode || mode === 'assets') {
-                // copy static assets
-                queueTasks(tasks, ['copy:bower', 'copy:assets']);
-            }
-        }
-    };
-
+    // Read and initialise with config
     var config = require('./get-config')(grunt);
     var tasks = [];
 
@@ -110,17 +27,18 @@ module.exports = function (grunt, loadConfig) {
 
     grunt.loadTasks(path.join(process.cwd(), 'node_modules/ft-frontend-build/tasks'));
 
+    // add templating task if needed
     switch (config.ft.templating.type) {
-        case 'hogan-express' : 
+        case 'hogan-express' :
             buildBlocks.tpl = function (mode, env, tasks) {
                 if (!mode || mode === 'tpl') {
-                    queueTasks(tasks, ['hogan-express']);
+                    grunt.ftQueueTasks(tasks, ['hogan-express']);
                 }
             };
             break;
     }
 
-
+    // Test tasks
     grunt.registerTask('test', [
         'jshint',
         'karma:phantom'
@@ -129,11 +47,14 @@ module.exports = function (grunt, loadConfig) {
     grunt.registerTask('browserTest', [
         'karma:browser'
     ]);
-   
+
+
+    // Configurable build task
     grunt.registerTask('build', 'Building the front end', function (mode, env) {
 
         console.log("Building front-end with version number " + grunt.config.get('assetVersion'));
         
+        // handle optional cli parameters
         if (mode === 'dev') {
             env = 'dev';
             mode = undefined;
@@ -141,6 +62,7 @@ module.exports = function (grunt, loadConfig) {
 
         var blocks = [];
 
+        // skip any blocks as indicated by config
         config.ft.blocks.forEach(function (block) {
             if (config.ft.skipBlocks.indexOf(block) === -1) {
                 blocks.push(block);
@@ -148,15 +70,19 @@ module.exports = function (grunt, loadConfig) {
         });
 
         blocks.forEach(function (block) {
+            // If the named build block exists, queue it
             if (typeof block === 'string' && buildBlocks[block]) {
                 buildBlocks[block](mode, env, tasks);
+            // Otherwise assume the string refers to a specifi grunt task, and queue it
             } else if (typeof block === 'string') {
                 tasks.push(block);
+            // Otherwise run the function (which should add tasks to the queue)
             } else if (typeof block === 'function') {
                 block(mode, env, tasks, grunt);
             }
         });
 
+        // Run all the tasks added to the queue
         grunt.task.run(tasks);
     });
 
@@ -164,6 +90,6 @@ module.exports = function (grunt, loadConfig) {
     // Default
     // grunt.registerTask('default', ['parallel:ci']);
     grunt.registerTask('default', function () {
-        grunt.task.run(queueTasks([], ['test', 'build']));
+        grunt.task.run(grunt.ftQueueTasks([], ['test', 'build']));
     });
 };

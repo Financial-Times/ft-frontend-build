@@ -128,13 +128,13 @@ All the paths below should begin with `./` and end in `/`
 
 ### Build steps
 
-* `blocks` *['clean', 'tpl', 'js', 'css', 'polyfill', 'assets']*: Blocks of build tasks to carry out. The names refer to blocks of tasks that carry out the following
+* `blocks` *['clean', 'tpl', 'js', 'css', 'modernize', 'assets']*: Blocks of build tasks to carry out. The names refer to blocks of tasks that carry out the following
     
     * `clean`: removes the files created by the last build
     * `tpl`: builds templates which correctly include origami modules and their dependencies' templates
-    * `js`: browserifies all your js modules and copies them to your built app. Also minifies your inline head script template
+    * `js`: browserifies all your js modules and copies them to your built app. Also minifies your inline head script template and copies any polyfills across to your built app
     * `css`: runs sass on all your css modules and copies them to your built app
-    * `polyfill`: generates a modernizr build and copies any polyfills across to your built app
+    * `modernize`: generates a custom modernizr build
     * `assets`: copies other static assets across to your built app
 
     Any other strings added to the blocks array must be the names of grunt tasks you want to run as part of *every* build
@@ -148,15 +148,15 @@ All the paths below should begin with `./` and end in `/`
     These functions may limit themselves to simple operations e.g. setting a dynamic property on the grunt config. If, however, the intention is for it to run some grunt tasks they **must not** use `grunt.task.run`; instead they should push/concat these tasks onto the `tasks` array provided.
 
 * `skipBlocks` *[]*: List of named build blocks to skip  
-* `skipTasks` *[]*: List of specific grunt-tasks to skip. e.g. `copy:css` will skip copying css, whereas `copy` will skip `copy:css`, `copy:js` etc...
+* `skipTasks` *[]*: List of specific grunt-tasks to skip. e.g. `copy:polyfills` will skip copying css, whereas `copy` will skip `copy:polyfills`, `copy:js` etc...
 
 
 ### Modules
 * `isModular` *false*: Whether or not the app follows the directory structure for a more complex modular app 
 
 ### Individual task config
-* `copyExcludeList` *[]*: List of files and subdirectories to exclude when copying static assets from bower_components to the built app; by default most things in your bower directory will be copied. Adding a `\` to the end of an entry here will exclude that directory and its entire contents. Accepts standard globbing patterns.
-* `copyIncludeList` *[]*: List of files and directories to include when copying static assets to the built app. Accepts standard globbing patterns. Remember that any directory with the name `assets` will already be copied to your built assets directory by default
+* `copyExcludeList` *[]*: List of files and subdirectories to exclude when copying static assets from bower_components to the built app; by default most assets from origami modules will be copied. Adding a `\` to the end of an entry here will exclude that directory and its entire contents. Accepts standard globbing patterns. *Note that this has no effect on any asset contained in an `assets` directory.*
+* `copyIncludeList` *[]*: List of files and directories to include when copying static assets to the built app. Accepts standard globbing patterns. Remember that any directory with the name `assets` will already be copied to your built assets directory by default. paths beginning with a './' will be relative to the project root. Paths beginning with oter characters will be looked for in the bower directory.
 * `bowerPolyfills` *[]*: Paths to polyfills installed via bower. Note that e.g. `event-listeners/EventListener.polyfill.min.js` will be copied to `js/polyfills/event-listeners.js` in the built app
 * `srcPolyfills` *[]*: Paths to polyfills not installed via bower. Note that e.g. `src/path/vendor/es6-promises.js` will be copied to `js/polyfills/es6-promises.js` in the built app
 * `watch` *{}*: Configuration to be passed in to grunt-contrib-watch. By default ft-frontend-build's `watch` task watches for changes in all scss and js files in your bower or src directories 
@@ -170,7 +170,7 @@ All the paths below should begin with `./` and end in `/`
 *`overrides` *{}*: Object containing variables in origami templates whose values shoudl be rewritten e.g.
           
           'o-ft-header': { // will run over all variables in o-ft-header's template
-              _namespace: 'header', // will replace 'o-ft-header.' with 'header.' as the namespace for all variables in the template 
+              _namespace: 'header', // will replace 'o-ft-header.' with 'header.' as the namespace for all variables in the template. Passing in '' will remove teh namespace entirely, including the .
               'topbar-items': 'o-ft-legacy-signin' // will replace {{o-ft-header.topbar-items}} with {{> o-ft-legacy-signin}} i.e. allows you to replace a placeholder variable with another module's template
               encodedLocation: 'encodedLocation' // replaces {{o-ft-header.encodedLocation}} with {{encodedLocation}}
               advert: '> promo1' // replaces {{o-ft-header.advert}} with {{> promo1}}
