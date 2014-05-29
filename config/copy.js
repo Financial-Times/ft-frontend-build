@@ -7,7 +7,7 @@ module.exports = {
         expand: true,
         cwd: '<%= ft.bowerPath %>',
         src: [
-            '**/*',
+            'o-*/*',
             '!*',
             '!o-*/main.*',
             '!o-*/**/*.js',
@@ -39,7 +39,12 @@ module.exports = {
     assets: {
         expand: true,
         cwd: '<%= ft.srcPath %>',
-        src: ['**/assets/**/*'],
+        src: ['**/assets/**/*'].concat(ftConfig.copyIncludeList.map(function (glob) {
+            if (glob.indexOf('./') !== 0) {
+                glob = '<%= ft.bowerPath %>' + glob;
+            }
+            return glob;
+        })),
         dest: '<%= ft.builtAssetsPath %>'
     },
     test: {
