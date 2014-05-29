@@ -106,7 +106,7 @@ Any directory named `assets` and its contents will be copied (including its full
       |        main.mustache
       |
       |  // A home for third party resources (mostly js, but could also be css/sass) which, for whichever reason, cannot be @imported/required directly after a bower install. 
-      |  // e.g. the es6-promises modernize requires npm and a transpiler to make it consumable by browserify, so a built version could be stored here
+      |  // e.g. the es6-promises polyfill requires npm and a transpiler to make it consumable by browserify, so a built version could be stored here
       \_ vendor
 
 
