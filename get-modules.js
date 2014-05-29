@@ -7,6 +7,6 @@ module.exports = function(ext) {
 	if(ftConfig.isModular) {
 		return grunt.file.expand({cwd: ftConfig.srcPath}, '*/main.' + ext);
 	} else {
-		return grunt.file.expand({cwd: ftConfig.srcPath}, '*.' + ext);
+		return grunt.file.expand({cwd: ftConfig.srcPath}, ext + '/*.' + ext);
 	}
 }
