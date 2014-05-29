@@ -103,6 +103,8 @@ module.exports = function (grunt) {
                     var newNamespace = grunt.config('ft.templating.overrides.' + mustacheData.module + '._namespace');
                     if (newNamespace) {
                         result = '{{' + (isEscaped ? '{' : '') + (mustacheData.mode || '') + newNamespace + '.' + mustacheData.property + (isEscaped ? '}' : '') + '}}';
+                    } else if (newNamespace === '') {
+                        result = '{{' + (isEscaped ? '{' : '') + (mustacheData.mode || '') + mustacheData.property + (isEscaped ? '}' : '') + '}}';
                     }
                 }
                

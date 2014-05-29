@@ -170,7 +170,7 @@ All the paths below should begin with `./` and end in `/`
 *`overrides` *{}*: Object containing variables in origami templates whose values shoudl be rewritten e.g.
           
           'o-ft-header': { // will run over all variables in o-ft-header's template
-              _namespace: 'header', // will replace 'o-ft-header.' with 'header.' as the namespace for all variables in the template 
+              _namespace: 'header', // will replace 'o-ft-header.' with 'header.' as the namespace for all variables in the template. Passing in '' will remove teh namespace entirely, including the .
               'topbar-items': 'o-ft-legacy-signin' // will replace {{o-ft-header.topbar-items}} with {{> o-ft-legacy-signin}} i.e. allows you to replace a placeholder variable with another module's template
               encodedLocation: 'encodedLocation' // replaces {{o-ft-header.encodedLocation}} with {{encodedLocation}}
               advert: '> promo1' // replaces {{o-ft-header.advert}} with {{> promo1}}
