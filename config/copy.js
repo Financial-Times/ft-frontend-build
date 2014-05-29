@@ -7,7 +7,7 @@ module.exports = {
         expand: true,
         cwd: '<%= ft.bowerPath %>',
         src: [
-            'o-*/*',
+            'o-*/**/*',
             '!*',
             '!o-*/main.*',
             '!o-*/**/*.js',
