@@ -8,7 +8,7 @@ module.exports = {
     skipTasks: [],
     copyExcludeList: [],
     copyIncludeList: [],
-    blocks: ['clean', 'tpl', 'js', 'css', 'modernizr', 'assets'],
+    blocks: ['clean', 'tpl', 'js', 'css', 'modernize', 'assets'],
     skipBlocks: [],
     watch: {},
     templating: {type: ''}
