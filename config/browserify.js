@@ -5,7 +5,8 @@ var modules, moduleName;
 modules = require('../get-modules')('js');
 
 modules.forEach(function(fileName) {
-    moduleName = fileName.split('/')[0].replace(/\.js$/, '');
+    var splitFileName = fileName.split('/');
+    moduleName = (ftConfig.isModular ? splitFileName[0] : splitFileName.pop().replace(/\.js$/, ''));
     files['<%= ft.builtAssetsPath %>js/' + moduleName + '.js'] = '<%= ft.srcPath %>/' + fileName;
 });
 

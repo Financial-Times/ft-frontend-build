@@ -7,7 +7,8 @@ var moduleName;
 var modules = require('../get-modules')('scss');
 
 modules.forEach(function(fileName) {
-    moduleName = fileName.split('/')[0].replace(/\.scss$/, '');
+    var splitFileName = fileName.split('/');
+    moduleName = (ftConfig.isModular ? splitFileName[0] : splitFileName.pop().replace(/\.scss$/, ''));
     files['<%= ft.builtAssetsPath %>css/' + moduleName + '.css'] = ['<%= ft.builtAssetsPath %>css/' + moduleName + '.css'];
 });
 
