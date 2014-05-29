@@ -12,8 +12,16 @@ module.exports = {
             '!o-*/main.*', // none of the nain entry points as these are handled by browserify, sass, or templating
             '!o-*/**/*.js', // ditto js
             '!o-*/**/*.scss', // ditto sass
-            '!o-*/src', // ditto anything in a src folder
+            '!o-*/src', // ditto anything in directories which are likely to contain source code
             '!o-*/src/**/*',
+            '!o-*/js',
+            '!o-*/js/**/*',
+            '!o-*/scss',
+            '!o-*/scss/**/*',
+            '!o-*/sass',
+            '!o-*/sass/**/*',
+            '!o-*/css',
+            '!o-*/css/**/*',
             '!*/bower.json', // metadata and install info not required publicly
             '!*/origami.json',
             '!*/package.json',
