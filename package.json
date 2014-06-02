@@ -42,6 +42,8 @@
     "jsonToFs": "https://github.com/squirrel-commando/jsonToFs/archive/master.tar.gz",
     "jasmine-node": "~2.0.0",
     "shell": "~0.3.2",
-    "wrench": "~1.5.8"
+    "wrench": "~1.5.8",
+    "semver": "~2.3.0",
+    "npm": "~1.4.13"
   }
 }

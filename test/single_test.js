@@ -21,7 +21,6 @@ module.exports = function (description, config) {
 
     it(description, function (done) {
         j2f.jsonToFs('test/dummy-project', deepDefault(config.structure, defaultFiles), ['node_modules']);
-
         
         process.chdir(path.join(process.cwd(), 'test/dummy-project'));
 

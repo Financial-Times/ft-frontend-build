@@ -1,4 +1,4 @@
-require('./test_setup');
+require('./test_init');
 
 var test = require('./single_test');
 

@@ -203,7 +203,17 @@ The asset version to build can be set using `--assetVersion=1.2.3` in the cli. T
 
 ## Tests
 
-By default these shoudl be written in jasmine and will be run using karam, but can be overwritten in its entirety
+By default these should be written in jasmine and will be run using karma, but can be overwritten in their entirety
+
+
+
+# Development
+
+## Tests
+
+`make test`. To setup the test environment with copies of all required node modules run `make testSetup`.
+
+Be warned, as the tests require multiple build processes to be simulated they are pretty slow. 
 
 
 /*
