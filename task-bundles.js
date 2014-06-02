@@ -39,16 +39,17 @@ module.exports = {
             if (env === 'dev') {
                 grunt.ftQueueTasks(tasks, [
                     'jshint:browser',
-                    'browserify:dev',
-                    'inline-head-script:dev'
+                    'browserify:dev'
                 ]);
+
             } else {
                 grunt.ftQueueTasks(tasks, [
-                    'browserify:prod',
-                    'inline-head-script:prod'
+                    'browserify:prod'
                 ]);
             }
-
+            if (config.ft.inlineHeadScriptDestinations) {
+                grunt.ftQueueTasks(tasks, ['inline-head-script:' + (env === 'dev' ? 'dev' : 'prod')]);
+            }
             grunt.ftQueueTasks(tasks, ['copy:polyfills']);
         }
     },

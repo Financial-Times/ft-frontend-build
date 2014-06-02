@@ -5,6 +5,7 @@ module.exports = {
     stagingPath: './tmp/',
     bowerPolyfills: [],
     srcPolyfills: [],
+    isModular: false,
     skipTasks: [],
     copyExcludeList: [],
     copyIncludeList: [],
