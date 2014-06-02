@@ -3,10 +3,10 @@
   "description": "Shared grunt configuration for responsive FT.com projects",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Financial-Times/ft-frontend-build.git"
+    "url": "https://thing.git"
   },
-  "version": "0.8.3",
-  "peerDependencies": {
+  "version": "0.0.0",
+  "dependencies": {
     "grunt-cli": "~0.1.9",
     "grunt": "~0.4.3",
     "load-grunt-config": "0.7.1",
@@ -33,15 +33,7 @@
     "uglifyify": "2.1.1",
     "textrequireify": "1.0.0",
     "debowerify": "0.7.0",
-    "grunt-csso": "~0.6.1"
-  },
-  "dependencies": {
+    "grunt-csso": "~0.6.1",
     "lodash": "~2.4.1"
-  },
-  "devDependencies": {
-    "jsonToFs": "https://github.com/squirrel-commando/jsonToFs/archive/master.tar.gz",
-    "jasmine-node": "~2.0.0",
-    "shell": "~0.3.2",
-    "wrench": "~1.5.8"
   }
 }
