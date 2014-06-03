@@ -2,6 +2,7 @@
 
 var grunt = require('grunt');
 var config = require('./get-config')(grunt);
+var path = require('path');
 
     // Adds tasks to the build queue if config settings don't indicate the task shoudl be skipped
 grunt.ftQueueTasks = function (queue, tasks) {
