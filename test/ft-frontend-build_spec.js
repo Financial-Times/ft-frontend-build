@@ -29,9 +29,10 @@ describe('ft-frontend-build', function () {
         process.chdir(cwd);
     });
 
-    //TODO: make this a loop (at the cost of losing the ability to give a decent description)?
-    test('should work with default settings', 'simple-prod');
-    test('should work with modular app', 'modular-prod');
+    tests.forEach(function(testFileName) {
+        testFileName = testFileName.replace('.js', '');
+        test('should work with ' + testFileName.replace(/-/g, ' ') + ' apps', testFileName);
+    });
 });
 
 //Adding this because jasmine doesnt fail properly when there is an exception
