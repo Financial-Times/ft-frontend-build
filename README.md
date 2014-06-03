@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/Financial-Times/ft-frontend-build.svg?branch=tests)](https://travis-ci.org/Financial-Times/ft-frontend-build)
+
 # ft-frontend-build
 
 Configurable and (fairly) infrastructure-agnostic build for a responsive front-end using origami components.
