@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/Financial-Times/ft-frontend-build.svg?branch=tests)](https://travis-ci.org/Financial-Times/ft-frontend-build)
+
 # ft-frontend-build
 
 Configurable and (fairly) infrastructure-agnostic build for a responsive front-end using origami components.
@@ -48,10 +50,10 @@ Note that it's recommended to store yuor templates with your other source code. 
     root
       \_ assets // images etc.
       \_ js
-          \_head
-          |  // If you need to output mustache variables into a your js e.g. domain specific config
-          |  // putting it in this file will mean ft-frontend-build minifies it for you
-          \_ inlineScript.mustache 
+        
+        // If you need to output mustache variables into a your js e.g. domain specific config
+        // putting it in this file will mean ft-frontend-build minifies it for you
+        inlineScript.mustache 
         // every top-level js file will be output into a compiled file, and must use commonjs to require any other js files
         main.js
         head.js
@@ -203,7 +205,17 @@ The asset version to build can be set using `--assetVersion=1.2.3` in the cli. T
 
 ## Tests
 
-By default these shoudl be written in jasmine and will be run using karam, but can be overwritten in its entirety
+By default these should be written in jasmine and will be run using karma, but can be overwritten in their entirety
+
+
+
+# Development
+
+## Tests
+
+`make test`. To setup the test environment with copies of all required node modules run `make testSetup`.
+
+Be warned, as the tests require multiple build processes to be simulated they are pretty slow. 
 
 
 /*

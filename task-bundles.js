@@ -2,6 +2,7 @@
 
 var grunt = require('grunt');
 var config = require('./get-config')(grunt);
+var path = require('path');
 
     // Adds tasks to the build queue if config settings don't indicate the task shoudl be skipped
 grunt.ftQueueTasks = function (queue, tasks) {
@@ -39,16 +40,17 @@ module.exports = {
             if (env === 'dev') {
                 grunt.ftQueueTasks(tasks, [
                     'jshint:browser',
-                    'browserify:dev',
-                    'inline-head-script:dev'
+                    'browserify:dev'
                 ]);
+
             } else {
                 grunt.ftQueueTasks(tasks, [
-                    'browserify:prod',
-                    'inline-head-script:prod'
+                    'browserify:prod'
                 ]);
             }
-
+            if (config.ft.inlineHeadScriptDestinations) {
+                grunt.ftQueueTasks(tasks, ['inline-head-script:' + (env === 'dev' ? 'dev' : 'prod')]);
+            }
             grunt.ftQueueTasks(tasks, ['copy:polyfills']);
         }
     },
