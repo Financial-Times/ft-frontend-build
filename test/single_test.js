@@ -4,6 +4,7 @@ var _ = require('lodash');
 var deepDefault = _.partialRight(_.merge, function deep(a, b) {
   return _.merge(a, b, deep);
 });
+var whereIsNpm = require('./where-is-npm');
 
 var defaultFiles = {
     bower_components: {
@@ -20,9 +21,11 @@ var defaultFiles = {
 module.exports = function (description, testName) {
 
     var config = require('./tests/full/' + testName);
+
     it(description, function (done) {
         j2f.jsonToFs('test/dummy-projects/' + testName, deepDefault(config.structure, defaultFiles), ['node_modules']);
-        
+        whereIsNpm.relocate(testName);
+        var cwd = process.cwd();
         process.chdir(path.join(process.cwd(), 'test/dummy-projects/' + testName));
 
         var grunt = require('./dummy-projects/' + testName + '/node_modules/grunt');
@@ -30,9 +33,10 @@ module.exports = function (description, testName) {
 
         grunt.tasks(config.tasks, {verbose: process.argv.indexOf('--verbose') > -1}, function () {
             var result = j2f.fsToJson('static');
-            config.specs(result, done);
+            config.specs(result, function () {
+                process.chdir(cwd);
+                done();
+            });
         });
     });
-
 };
-

@@ -1,8 +1,8 @@
 var path = require('path');
 var _ = require('lodash');
-var npm = require('npm');
-var semver = require('semver');
 var fs = require('fs');
+var whereIsNpm = require('./where-is-npm');
+var wrench = require('wrench');
 
 var deleteFolderRecursive = function(path) {
     if(fs.existsSync(path) ) {
@@ -20,26 +20,30 @@ var deleteFolderRecursive = function(path) {
     }
 };
 
-
-var packageJson = require('../package.json');
-
-var dependencies = _.merge(packageJson.dependencies, packageJson.peerDependencies);
-
-dependencies = Object.keys(dependencies).map(function (pack) {
-        
-    return pack + ((semver.valid(dependencies[pack]) || /^(\~|\^)/.test(dependencies[pack])) ? ('@' + dependencies[pack]) : ('=' + dependencies[pack]));
-
-});
+console.log('Relocating node_modules');
+try {
+    whereIsNpm.relocate('_base');
+} catch (e) {
+    whereIsNpm.set('_base');
+}
 
 var tests = _.filter(fs.readdirSync('test/tests/full'), function(fileName) {
     return fileName.indexOf('.js') === fileName.length - 3;
 });
 
+
+console.log('Reseting old dummy projects');
 var testDir;
-npm.load({}, function () {
-    tests.forEach(function(testFileName) {
-        testDir = 'test/dummy-projects/' + testFileName.replace('.js', '');
-        deleteFolderRecursive(path.join(process.cwd(), testDir));
-        npm.commands.install(testDir, dependencies, function () {});
-    });
-});  
+tests.forEach(function(testFileName) {
+    
+    testDir = path.join(process.cwd(),'test/dummy-projects/' + testFileName.replace('.js', ''));
+    deleteFolderRecursive(testDir);
+    fs.mkdirSync(testDir);
+});
+
+wrench.copyDirSyncRecursive('./', 'test/dummy-projects/' + whereIsNpm.get() + '/node_modules/ft-frontend-build', {
+    forceDelete: true, // Whether to overwrite existing directory or not
+    preserveFiles: false, // If we're overwriting something and the file already exists, keep the existing
+    exclude: /node_modules/ // An exclude filter (either a regexp or a function)
+});
+
