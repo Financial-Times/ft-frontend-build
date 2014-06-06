@@ -213,7 +213,7 @@ By default these should be written in jasmine and will be run using karma, but c
 
 ## Tests
 
-`make test`. To setup the test environment with copies of all required node modules run `make testSetup`.
+`make test`. To setup the test environment with copies of all required node modules run `make testWithSetup`.
 
 Be warned, as the tests require multiple build processes to be simulated they are pretty slow. 
 

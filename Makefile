@@ -1,7 +1,10 @@
 .PHONY: test
 
-testSetup: 
-	node test/test_setup.js
+npmSetupForTest: 
+	node test/npm_setup.js	
 
 test: 
+	node test/test_setup.js
 	@./node_modules/.bin/jasmine-node test
+
+testWithFullSetup: npmSetupForTest test

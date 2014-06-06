@@ -4,6 +4,7 @@ var _ = require('lodash');
 var deepDefault = _.partialRight(_.merge, function deep(a, b) {
   return _.merge(a, b, deep);
 });
+var whereIsNpm = require('./where-is-npm');
 
 var defaultFiles = {
     bower_components: {
@@ -17,20 +18,25 @@ var defaultFiles = {
      'bower.json': '{"name": "Dummy application", "dependencies": {"o-thing": "0.1.0", "other-thing": "0.2.0"}}'    
 };
 
-module.exports = function (description, config) {
+module.exports = function (description, testName) {
+
+    var config = require('./tests/full/' + testName);
 
     it(description, function (done) {
-        j2f.jsonToFs('test/dummy-project', deepDefault(config.structure, defaultFiles), ['node_modules']);
-        
-        process.chdir(path.join(process.cwd(), 'test/dummy-project'));
+        j2f.jsonToFs('test/dummy-projects/' + testName, deepDefault(config.structure, defaultFiles), ['node_modules']);
+        whereIsNpm.relocate(testName);
+        var cwd = process.cwd();
+        process.chdir(path.join(process.cwd(), 'test/dummy-projects/' + testName));
 
-        var grunt = require('./dummy-project/node_modules/grunt');
-        require('./dummy-project/GruntFile')(grunt);
+        var grunt = require('./dummy-projects/' + testName + '/node_modules/grunt');
+        require('./dummy-projects/' + testName + '/GruntFile')(grunt);
 
         grunt.tasks(config.tasks, {verbose: process.argv.indexOf('--verbose') > -1}, function () {
             var result = j2f.fsToJson('static');
-            config.specs(result, done);
+            config.specs(result, function () {
+                process.chdir(cwd);
+                done();
+            });
         });
     });
-
 };

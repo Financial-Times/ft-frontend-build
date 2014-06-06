@@ -4,6 +4,6 @@ node_js:
 before_install:
   - gem install sass
   - npm install 
-  - make testSetup
+  - make npmSetupForTest
 script:
   - make test
