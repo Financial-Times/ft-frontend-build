@@ -2,14 +2,11 @@ var test = require('./single_test');
 var fs = require('fs');
 var _ = require('lodash');
 var path = require('path');
+var wrench = require('wrench');
 
-require('./test_setup');
+var tests = require('./test_setup').tests;
 
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 30000000;
-
-var tests = _.filter(fs.readdirSync('./test/spec/'), function(fileName) {
-    return fileName.indexOf('.js') === fileName.length - 3;
-});
 
 describe('ft-frontend-build', function () {
     var cwd;
