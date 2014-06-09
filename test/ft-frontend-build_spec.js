@@ -6,11 +6,10 @@ var path = require('path');
 require('./test_setup');
 
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 30000000;
-var tests = _.filter(fs.readdirSync('./test/tests/spec/'), function(fileName) {
+
+var tests = _.filter(fs.readdirSync('./test/spec/'), function(fileName) {
     return fileName.indexOf('.js') === fileName.length - 3;
 });
-
-
 
 describe('ft-frontend-build', function () {
     var cwd;
