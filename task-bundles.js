@@ -45,7 +45,8 @@ module.exports = {
 
             } else {
                 grunt.ftQueueTasks(tasks, [
-                    'browserify:prod'
+                    'browserify:prod',
+                    'uglify:prod'
                 ]);
             }
             if (config.ft.inlineHeadScriptDestinations) {

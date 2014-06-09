@@ -27,7 +27,7 @@ try {
     whereIsNpm.set('_base');
 }
 
-var tests = _.filter(fs.readdirSync('test/tests/full'), function(fileName) {
+var tests = _.filter(fs.readdirSync('test/tests/spec/'), function(fileName) {
     return fileName.indexOf('.js') === fileName.length - 3;
 });
 

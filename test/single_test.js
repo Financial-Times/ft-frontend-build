@@ -20,7 +20,7 @@ var defaultFiles = {
 
 module.exports = function (description, testName) {
 
-    var config = require('./tests/full/' + testName);
+    var config = require('./tests/spec/' + testName);
 
     it(description, function (done) {
         j2f.jsonToFs('test/dummy-projects/' + testName, deepDefault(config.structure, defaultFiles), ['node_modules']);
