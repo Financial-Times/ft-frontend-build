@@ -161,7 +161,7 @@ All the paths below should begin with `./` and end in `/`
 * `copyIncludeList` *[]*: List of files and directories to include when copying static assets to the built app. Accepts standard globbing patterns. Remember that any directory with the name `assets` will already be copied to your built assets directory by default. paths beginning with a './' will be relative to the project root. Paths beginning with oter characters will be looked for in the bower directory.
 * `bowerPolyfills` *[]*: Paths to polyfills installed via bower. Note that e.g. `event-listeners/EventListener.polyfill.min.js` will be copied to `js/polyfills/event-listeners.js` in the built app
 * `srcPolyfills` *[]*: Paths to polyfills not installed via bower. Note that e.g. `src/path/vendor/es6-promises.js` will be copied to `js/polyfills/es6-promises.js` in the built app
-* `watch` *{}*: Configuration to be passed in to grunt-contrib-watch. By default ft-frontend-build's `watch` task watches for changes in all scss and js files in your bower or src directories 
+* `watch` *{}*: Configuration to be passed in to grunt-contrib-watch. By default ft-frontend-build's `watch` task watches for changes in all scss and js files in your bower or src directories. To override these behaviours simply define properties here called 'scss' or 'js', or to add new watches choose additional names
 * `templating`: Configuration object for constructing your app's templates when they require origami modules' templates. The `type` property (currently only accepting the value 'hogan-express') specifies the templating system you are using, and the remaining properties specify options for parsing the templates
 
 #### Hogan-express templating options
