@@ -6,7 +6,7 @@
     "url": "https://github.com/Financial-Times/ft-frontend-build.git"
   },
   "main": "lib/build.js",
-  "version": "0.10.0",
+  "version": "0.10.1",
   "peerDependencies": {
     "grunt-cli": "~0.1.9",
     "grunt": "~0.4.3",
