@@ -26,10 +26,9 @@ describe('ft-frontend-build', function () {
     tests.forEach(function(testFileName) {
         testFileName = testFileName.replace('.js', '');
         var config = require('./spec/' + testFileName);
+        if (!Object.keys(config).length) return;
 
-        
-
-        if (config.specs instanceof Array) {
+        if (typeof config.specs === 'object') {
             multiTest(testFileName, config);
         } else {
             test(testFileName, config);

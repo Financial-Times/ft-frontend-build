@@ -13,7 +13,8 @@ try {
 }
 
 var tests = wrench.readdirSyncRecursive('test/spec').filter(function(fileName) {
-    return fileName.indexOf('.js') === fileName.length - 3 && fileName.indexOf('full-builds') > -1;
+    var dotJsIndex = fileName.indexOf('.js');
+    return dotJsIndex === fileName.length - 3 && dotJsIndex > -1;
 });
 
 console.log('Resetting old dummy projects');

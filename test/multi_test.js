@@ -1,22 +1,17 @@
 var _ = require('lodash');
 var test = require('./single_test');
+var wrench = require('wrench');
+var path = require('path');
 
 module.exports = function (testName, config) {
-    describe(testFileName.replace(/-/g, ' '), function () {
-        beforeEach(function () {
-            if (config.before) {
-                config.before();
-            }
-        });
-                
+    describe(testName.replace(/-/g, ' '), function () {
+     
         afterEach(function () {
-            //clean the static folder
-            if (config.after) {
-                config.after();
-            }
+            wrench.rmdirSyncRecursive(path.join(process.cwd(), 'test/dummy-projects/' + testName + '/static'), true);
         });
-        config.specs.forEach(function (conf, name) {
-            test(testFileName, _.defaults(conf, config));
+
+        Object.keys(config.specs).forEach(function (name) {
+            test(testName, _.defaults(config.specs[name], config));
         });
     });
 };

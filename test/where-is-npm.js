@@ -23,6 +23,7 @@ function relocate (newDir) {
     );
 
     set(newDir);
+    console.log('moved node modules to ' + newDir);
 }
 
 module.exports = {

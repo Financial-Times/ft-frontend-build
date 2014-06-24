@@ -29,12 +29,17 @@ module.exports = function (testName, config) {
         var cwd = process.cwd();
         process.chdir(path.join(process.cwd(), 'test/dummy-projects/' + testName));
 
+        if (config.before) {
+            config.before();
+        }
         var grunt = require('./dummy-projects/' + testName + '/node_modules/grunt');
         require('./dummy-projects/' + testName + '/GruntFile')(grunt);
-
-        grunt.tasks(config.tasks, {verbose: process.argv.indexOf('--verbose') > -1}, function () {
+        grunt.tasks(config.tasks, {verbose: process.argv.indexOf('--grunt-verbose') > -1}, function () {
             var result = j2f.fsToJson('static');
             config.specs(result, function () {
+                if (config.after) {
+                    config.after();
+                }
                 process.chdir(cwd);
                 done();
             });
