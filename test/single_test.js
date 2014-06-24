@@ -1,10 +1,13 @@
 var path = require('path');
 var j2f = require('jsonToFs');
 var _ = require('lodash');
+
+
+var whereIsNpm = require('./where-is-npm');
+
 var deepDefault = _.partialRight(_.merge, function deep(a, b) {
   return _.merge(a, b, deep);
 });
-var whereIsNpm = require('./where-is-npm');
 
 var defaultFiles = {
     bower_components: {
@@ -18,11 +21,9 @@ var defaultFiles = {
      'bower.json': '{"name": "Dummy application", "dependencies": {"o-thing": "0.1.0", "other-thing": "0.2.0"}}'    
 };
 
-module.exports = function (description, testName) {
+module.exports = function (testName, config) {
 
-    var config = require('./spec/' + testName);
-
-    it(description, function (done) {
+    it('should work with ' + testName.replace(/-/g, ' ') + ' apps', function (done) {
         j2f.jsonToFs('test/dummy-projects/' + testName, deepDefault(config.structure, defaultFiles), ['node_modules']);
         whereIsNpm.relocate(testName);
         var cwd = process.cwd();

@@ -17,7 +17,6 @@ function get () {
 
 function relocate (newDir) {
     var oldDir = get();
-        
     fs.renameSync(
         path.join(process.cwd(), 'test/dummy-projects/' + oldDir + '/node_modules'),
         path.join(process.cwd(), 'test/dummy-projects/' + newDir + '/node_modules')
