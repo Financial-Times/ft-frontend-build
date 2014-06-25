@@ -164,6 +164,8 @@ All the paths below should begin with `./` and end in `/`
 * `watch` *{}*: Configuration to be passed in to grunt-contrib-watch. By default ft-frontend-build's `watch` task watches for changes in all scss and js files in your bower or src directories. To override these behaviours simply define properties here called 'scss' or 'js', or to add new watches choose additional names
 * `templating`: Configuration object for constructing your app's templates when they require origami modules' templates. The `type` property (currently only accepting the value 'hogan-express') specifies the templating system you are using, and the remaining properties specify options for parsing the templates
 
+In addition `jsnit` is configurable by defining a `.jshintrc` file in the root of your project
+
 #### Hogan-express templating options
 
 *Note that after the build has completed a json file `ft-frontend-template-map.json` will be created in the root of your project and this should be required when registerin gpartials with express.*
