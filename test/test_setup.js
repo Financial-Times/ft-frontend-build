@@ -13,10 +13,11 @@ try {
 }
 
 var tests = wrench.readdirSyncRecursive('test/spec').filter(function(fileName) {
-    return fileName.indexOf('.js') === fileName.length - 3;
+    var dotJsIndex = fileName.indexOf('.js');
+    return dotJsIndex === fileName.length - 3 && dotJsIndex > -1;
 });
 
-console.log('Reseting old dummy projects');
+console.log('Resetting old dummy projects');
 
 tests.forEach(function(testFileName) {
     var testDir = path.join(process.cwd(),'test/dummy-projects/' + testFileName.replace('.js', ''));

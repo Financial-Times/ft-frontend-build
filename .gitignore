@@ -2,4 +2,3 @@ node_modules
 test/dummy-projects
 test/dummy-project
 test/npm-location.json
-test/spec

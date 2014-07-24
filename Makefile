@@ -5,6 +5,6 @@ npmSetupForTest:
 
 test: 
 	node test/test_setup.js
-	@./node_modules/.bin/jasmine-node test
+	@./node_modules/.bin/jasmine-node test --verbose
 
 testWithFullSetup: npmSetupForTest test
